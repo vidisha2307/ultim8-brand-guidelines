@@ -358,3 +358,27 @@ body.embed .screen { border-radius: 0; }
 .grid--6 .pc { padding: 16px; }
 .grid--6 .kb { padding: 0 12px; font-size: 21px; }
 .printer:not(.on) .paper { transition: transform .35s ease-in; }
+
+/* =====================================================================
+   BUTTON SYSTEM (kiosk, 1920×1080 canvas) — rounded square 14px,
+   2-word labels, generous padding, icons sized to the text (1em).
+   ===================================================================== */
+:root { --kr: 14px; }
+.kb { border-radius: var(--kr); height: 68px; padding: 0 36px; gap: .55em; font-size: calc(24px * var(--k)); line-height: 1; letter-spacing: .01em; }
+.kb .u8, .kh__cart .u8, .chipk .u8 { height: 1em; width: auto; flex: none; }
+.kb--lg { height: 84px; padding: 0 44px; font-size: calc(28px * var(--k)); border-radius: var(--kr); }
+.welcome .kb { height: 92px; padding: 0 56px; font-size: 32px; border-radius: var(--kr); }
+.kh__cart { border-radius: var(--kr); height: 64px; padding: 0 22px 0 26px; gap: .55em; font-size: 24px; }
+.kh__cart b { border-radius: 10px; }
+.chipk { border-radius: var(--kr); height: 56px; padding: 0 26px; font-size: 22px; display: inline-flex; align-items: center; }
+.circle-go { border-radius: var(--kr); }
+.menu__close, .sheet__x { border-radius: var(--kr); }
+.cmp__nav { border-radius: var(--kr); }
+.stepper { border-radius: var(--kr); }
+.ktoast button { border-radius: 10px; height: 52px; padding: 0 24px; font-size: 21px; }
+.cl .rm { text-decoration: none; height: 52px; padding: 0 20px; border-radius: var(--kr); box-shadow: inset 0 0 0 2px var(--line); color: var(--ink); font-size: 20px; font-weight: 600; }
+.cl .rm:hover { box-shadow: inset 0 0 0 2px var(--orange); color: var(--orange); }
+.search button { height: 48px; padding: 0 18px; border-radius: 10px; background: var(--white); font-weight: 600; color: var(--orange); }
+.pc .act .kb, .cmp__item .act .kb { padding: 0 16px; }
+.grid--6 .kb { font-size: 21px; height: 60px; }
+.paper .r-acts .kb { height: 64px; font-size: 22px; }

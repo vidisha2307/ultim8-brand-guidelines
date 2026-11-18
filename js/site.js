@@ -144,7 +144,7 @@
     expImg.after(freshGrid);
     $('#expiredFix').addEventListener('click', e => {
       fresh = !fresh; expImg.style.display = fresh ? 'none' : ''; freshGrid.style.display = fresh ? 'grid' : 'none';
-      e.target.textContent = fresh ? 'Show the expired versions' : 'Show the fresh version';
+      e.target.textContent = fresh ? 'Show Expired' : 'Show Fresh';
     });
   });
 
@@ -252,7 +252,7 @@
     let round = 0, score = 0;
     function drawRound() {
       const row = $('#picksRow');
-      if (round > 2) { $('#picksMsg').textContent = `You picked ${score} of 3 right. ${score === 3 ? 'Perfect picks!' : 'Bright, natural and clear is always the pick.'}`; row.innerHTML = `<button class="btn" style="grid-column:1/-1;aspect-ratio:auto;background:var(--orange);border:0" id="picksAgain">Try again</button>`; $('#picksAgain').onclick = () => { round = score = 0; drawRound(); }; return; }
+      if (round > 2) { $('#picksMsg').textContent = `You picked ${score} of 3 right. ${score === 3 ? 'Perfect picks!' : 'Bright, natural and clear is always the pick.'}`; row.innerHTML = `<button class="btn" style="grid-column:1/-1;aspect-ratio:auto;background:var(--orange);border:0" id="picksAgain">Try Again</button>`; $('#picksAgain').onclick = () => { round = score = 0; drawRound(); }; return; }
       $('#picksMsg').textContent = `Round ${round + 1} of 3 — tap the photo that follows our rules.`;
       const flip = Math.random() < .5, pos = col => `${col * 100}% ${round * 50}%`;
       const a = `<button data-ok="1" style="background-image:url(assets/img/photos/picture-picks.jpg);background-position:${pos(0)}" aria-label="Photo A"></button>`;

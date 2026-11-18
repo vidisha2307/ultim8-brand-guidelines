@@ -671,3 +671,47 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .footer .btn { background: var(--white); color: var(--orange); }
 .footer .btn:hover { background: var(--grey); }
 .footer__bottom { border-top-color: rgba(255,255,255,.35); opacity: 1; }
+
+/* =====================================================================
+   BUTTON SYSTEM — one shape everywhere: rounded square (10px),
+   generous padding, 2-word labels, icons sized to the text (1em).
+   ===================================================================== */
+:root { --btn-r: 10px; }
+.btn, .btn--ghost, .btn--white, .btn--line, .copy-btn, .nav__kiosk, .chip, .footer .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6em;
+  min-height: 48px; padding: 0 24px; border-radius: var(--btn-r);
+  font-family: var(--font); font-weight: 600; font-size: 15px; line-height: 1; letter-spacing: .01em;
+  white-space: nowrap; text-decoration: none; cursor: pointer; border: 0;
+  transition: background .2s, color .2s, box-shadow .2s, transform .1s;
+}
+.btn .u8, .chip .u8, .nav__kiosk .u8 { height: 1em; width: auto; flex: none; }
+/* primary */
+.btn { background: var(--orange); color: var(--white); }
+.btn:hover { background: var(--deep); }
+/* secondary (outline) */
+.btn--ghost, .nav__kiosk { background: var(--white); color: var(--orange); box-shadow: inset 0 0 0 2px var(--orange); }
+.btn--ghost:hover, .nav__kiosk:hover { background: var(--orange); color: var(--white); }
+/* on orange backgrounds */
+.btn--white, .footer .btn { background: var(--white); color: var(--orange); box-shadow: none; }
+.btn--white:hover, .footer .btn:hover { background: var(--grey); color: var(--orange); }
+.btn--line { background: transparent; color: var(--white); box-shadow: inset 0 0 0 2px var(--white); }
+.btn--line:hover { background: var(--white); color: var(--orange); }
+.btn:active, .chip:active, .nav__kiosk:active { transform: scale(.97); }
+.btn:focus-visible, .chip:focus-visible, .nav__kiosk:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+/* toggle / filter buttons: same shape, compact */
+.chip { min-height: 40px; padding: 0 18px; font-size: 14px; background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 2px var(--grey); }
+.chip:hover { box-shadow: inset 0 0 0 2px var(--orange); color: var(--orange); }
+.chip.is-on { background: var(--orange); color: var(--white); box-shadow: inset 0 0 0 2px var(--orange); }
+.copy-btn { min-height: 34px; padding: 0 14px; font-size: 13px; }
+.nav__kiosk { min-height: 42px; padding: 0 20px; margin-left: 8px; font-size: 14px; }
+.tagline__langs .chip { background: transparent; color: var(--white); box-shadow: inset 0 0 0 2px var(--white); }
+.tagline__langs .chip.is-on, .tagline__langs .chip:hover { background: var(--white); color: var(--orange); }
+.menu-item__link { border-radius: var(--btn-r); }
+.hero__down { border-radius: var(--btn-r); }
+.hero__acts .btn { min-height: 54px; padding: 0 30px; font-size: 16px; }
+.picks__quiz #picksAgain { min-height: 48px; border-radius: var(--btn-r); }
+@media (max-width: 1180px) {
+  .nav__kiosk { min-height: 52px; font-size: 16px; margin: 10px 0 0; }
+  .menu-item__toggle { border-radius: var(--btn-r); }
+  .tagline__langs .chip { color: var(--orange); box-shadow: inset 0 0 0 2px var(--orange); }
+}

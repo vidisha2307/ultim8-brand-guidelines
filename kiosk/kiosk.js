@@ -78,7 +78,7 @@
     const before = qty(id);
     if (q <= 0) delete S.cart[id]; else S.cart[id] = q;
     updateBadge();
-    if (!silent && q > before) toast(`${P[id].name} added to your cart`, 'View cart', () => go('cart'));
+    if (!silent && q > before) toast(`${P[id].name} added to your cart`, "View Cart", () => go("cart"));
     rerenderBits();
   }
   function addList(item) {
@@ -92,7 +92,7 @@
   function addBtn(id) {
     const q = qty(id);
     return q ? `<div class="stepper stepper--o" data-step="${id}"><button data-d="-1" aria-label="Remove one">−</button><span>${q}</span><button data-d="1" aria-label="Add one">+</button></div>`
-      : `<button class="kb" data-add="${id}">${u8('i15')}Add to Cart</button>`;
+      : `<button class="kb" data-add="${id}">${u8("i15")}Add Item</button>`;
   }
   function rerenderBits() {
     $$('[data-slot]').forEach(el => { el.innerHTML = addBtn(el.dataset.slot); el.closest('.pc')?.classList.toggle('in', !!qty(el.dataset.slot)); });
@@ -125,7 +125,7 @@
     if (q) {
       const hits = Object.values(P).filter(p => (p.name + ' ' + p.subs.join(' ') + ' ' + CATS.find(c => c.id === p.cat).name).toLowerCase().includes(q));
       const catHit = CATS.filter(c => c.name.toLowerCase().includes(q) && !hits.some(h => h.cat === c.id));
-      if (!hits.length && !catHit.length) return `<div class="empty"><div><h3>Hmm, we couldn’t find “${f.q}”.</h3><p>Let’s narrow this down — try a simpler word like “milk” or “apple”, or ask a ULTIM8 Helper nearby.</p><div class="acts"><button class="kb" data-help>Call a ULTIM8 Helper</button><button class="kb kb--ghost" data-clear="${cols === 6 ? 'homeSearch' : 'findSearch'}">Clear search</button></div></div></div>`;
+      if (!hits.length && !catHit.length) return `<div class="empty"><div><h3>Hmm, we couldn’t find “${f.q}”.</h3><p>Let’s narrow this down — try a simpler word like “milk” or “apple”, or ask a ULTIM8 Helper nearby.</p><div class="acts"><button class="kb" data-help>Call Helper</button><button class="kb kb--ghost" data-clear="${cols === 6 ? 'homeSearch' : 'findSearch'}">Clear Search</button></div></div></div>`;
       return `<p class="note-line">${hits.length} result${hits.length === 1 ? '' : 's'} for “${f.q}”</p><div class="grid ${cols === 6 ? 'grid--6' : ''}">${hits.map(p => productCard(p, { loc: true })).join('')}</div>` +
         catHit.map(c => aisleCard(c)).join('');
     }
@@ -138,7 +138,7 @@
   function aisleCard(c) {
     const added = S.list.some(l => l.name === c.name);
     return `<div class="empty" style="margin-top:20px"><div><h3>${c.name} is in Aisle ${c.aisle}.</h3><p>${c.note || ''} We’ll add it to your shopping list so you don’t forget.</p>
-      <div class="acts"><button class="kb" data-listadd="${c.id}" ${added ? 'disabled' : ''}>${added ? 'On your list' : 'Add to my shopping list'}</button><button class="kb kb--ghost" data-map="${c.aisle}">Show me the way</button></div></div>
+      <div class="acts"><button class="kb" data-listadd="${c.id}" ${added ? 'disabled' : ''}>${added ? "On List" : "Add Reminder"}</button><button class="kb kb--ghost" data-map="${c.aisle}">Show Map</button></div></div>
       <div style="width:520px">${mapHtml(c.aisle)}</div></div>`;
   }
   function mapHtml(aisle) {
@@ -158,7 +158,7 @@
       <div><i data-u8="wordmark" class="welcome__logo"></i>
         <h1>Find the right products for your next meal.</h1>
         <p>Search, get recipe ideas, compare options and print your shopping list — all in one place.</p>
-        <button class="kb" data-start>Start shopping</button>
+        <button class="kb" data-start>Start Shopping</button>
         <div class="welcome__tap">Touch anywhere to begin</div>
       </div>
       <div class="welcome__lock"><img src="../assets/brand/tagline.png" alt="Less to Decide. More to Enjoy."></div></section>`,
@@ -201,7 +201,7 @@
           <div class="recipe__serves">Serves<div class="stepper"><button data-serves="-2" aria-label="Fewer servings">−</button><span>${S.serves}</span><button data-serves="2" aria-label="More servings">+</button></div></div></div>
           <div><div class="ing">${rows}</div>
             <div class="ing__foot"><div><b>${n} of ${r.items.length} items · ${money(total)}</b><div style="font-size:20px;color:var(--soft)">Tap an item to leave it out. Items without a price go on your shopping list.</div></div>
-            <button class="kb kb--lg" data-addrecipe ${n ? '' : 'disabled'}>${u8('i15')}Add ${n} items to cart</button></div></div></div></div>`;
+            <button class="kb kb--lg" data-addrecipe ${n ? '' : 'disabled'}>${u8('i15')}Add Items</button></div></div></div></div>`;
     },
 
     compare: () => {
@@ -209,14 +209,14 @@
       const rows = [...new Set(shown.flatMap(id => Object.keys(P[id].spec)))];
       const slots = [...shown]; while (slots.length < 3) slots.push(null);
       const head = slots.map(id => {
-        if (!id) return `<div><button class="cmp__add" data-cmppicker><b>+</b>Add a product to compare</button></div>`;
+        if (!id) return `<div><button class="cmp__add" data-cmppicker><b>+</b>Add Product</button></div>`;
         const p = P[id];
         return `<div><div class="cmp__item ${S.cmpPick === id ? 'pick' : ''}">${S.cmpPick === id ? '<span class="badge">Our pick for you</span>' : ''}
           <button class="cmp__x" data-cmprm="${id}" aria-label="Remove ${p.name}">×</button>
           <div><h3>${p.name}</h3><div class="unit">${p.unit}</div><div class="price">${money(p.price)}</div></div><img src="${p.img}" alt="">
           <div class="act" data-slot="${id}">${addBtn(id)}</div></div></div>`;
       }).join('');
-      return `<div class="page">${pageHead('Compare &amp; Choose', 'Compare similar products to find what’s right for you.', `<button class="kb kb--ghost" data-cmppicker>${u8('i13')}Add to Comparison (${ids.length})</button>`)}
+      return `<div class="page">${pageHead('Compare &amp; Choose', 'Compare similar products to find what’s right for you.', `<button class="kb kb--ghost" data-cmppicker>${u8('i13')}Compare (${ids.length})</button>`)}
         <div class="helper">${u8('mark8')}<p>We get it! Too many choices can be overwhelming. What matters most to you—price, quality, or convenience?</p>
           <div class="chipset">${['Price', 'Quality', 'Convenience'].map(k => `<button class="chipk ${S.cmpWhy === k ? 'on' : ''}" data-why="${k}">${k}</button>`).join('')}</div></div>
         <div class="cmp"><button class="cmp__nav" data-cmpnav="-1" ${start === 0 ? 'disabled' : ''} aria-label="Previous products"></button>
@@ -237,7 +237,7 @@
           const n = o.items.reduce((a, [, c]) => a + c, 0), now = o.items.reduce((t, [id, c]) => t + P[id].price * c, 0);
           return `<article class="oc ${S.openOrder === o.no ? 'open' : ''}"><div class="meta"><h3>Order #${o.no}</h3>${o.date}<br>${n} items</div>
             <div class="thumbs">${o.items.map(([id]) => `<span><img src="${P[id].img}" alt="${P[id].name}"></span>`).join('')}</div>
-            <div class="total">${money(o.paid)}</div><button class="kb" data-reorder="${o.no}">${u8('i15')}Add All to Cart</button>
+            <div class="total">${money(o.paid)}</div><button class="kb" data-reorder="${o.no}">${u8("i15")}Add All</button>
             <button class="more ${S.openOrder === o.no ? 'open' : ''}" data-openorder="${o.no}" aria-label="Order details"></button>            <div class="oc__detail">${o.items.map(([id, c]) => `<div class="oc__line"><img src="${P[id].img}" alt=""><b>${P[id].name}</b><span>Qty ${c}</span><span>${money(P[id].price * c)}</span><div data-slot="${id}">${addBtn(id)}</div></div>`).join('')}
               <p class="note-line" style="margin:6px 0 0">Today’s prices apply — this order would be ${money(now)} today.</p></div></article>`;
         }).join('') : `<div class="empty"><div><h3>No orders match “${S.ordQ}”.</h3><p>Try an order number or a product name, like “banana”.</p></div></div>`;
@@ -246,7 +246,7 @@
         body = `<div class="grid">${Object.entries(freq).sort((a, b) => b[1] - a[1]).map(([id, n]) => productCard(P[id]).replace('<h3>', `<div class="loc">Bought ${n} times</div><h3>`)).join('')}</div>`;
       } else {
         body = `<div class="grid" style="grid-template-columns:repeat(3,1fr)">${LISTS.map((l, i) => `<div class="list-card"><h3>${l.name}</h3><div style="font-size:21px;color:var(--soft)">${l.items.length} items · ${money(l.items.reduce((t, id) => t + P[id].price, 0))}</div>
-          <div class="thumbs">${l.items.map(id => `<span><img src="${P[id].img}" alt="${P[id].name}"></span>`).join('')}</div><button class="kb" data-addlist="${i}">${u8('i15')}Add list to cart</button></div>`).join('')}</div>`;
+          <div class="thumbs">${l.items.map(id => `<span><img src="${P[id].img}" alt="${P[id].name}"></span>`).join('')}</div><button class="kb" data-addlist="${i}">${u8("i15")}Add List</button></div>`).join('')}</div>`;
       }
       return `<div class="page">${pageHead('Your Past Orders', 'Quickly reorder your favorites.', S.ordTab === 'All Orders' ? searchBox('orderSearch', 'Search past orders...', S.ordQ) : '')}
         <div class="with-side">${sidebar('')}<div><div class="tabs">${tabs.map(t => `<button class="${t === S.ordTab ? 'on' : ''}" data-otab="${t}">${t}</button>`).join('')}</div>${body}</div></div></div>`;
@@ -256,7 +256,7 @@
       const ids = Object.keys(S.cart);
       if (!ids.length && !S.list.length) return `<div class="page">${pageHead('Review Your Cart', 'Check your items and choose how you’d like to continue.')}
         <div class="empty-cart">${u8('mark8')}<h2>Your cart is ready when you are.</h2><p>Let’s find something good — search, browse a recipe, or reorder a favorite.</p>
-        <button class="kb kb--lg" data-go="home">Start shopping</button></div></div>`;
+        <button class="kb kb--lg" data-go="home">Start Shopping</button></div></div>`;
       const sub = subtotal(), tax = sub * TAX;
       return `<div class="page">${pageHead('Review Your Cart', 'Check your items and choose how you’d like to continue.')}
         <div class="cart"><div>
@@ -266,8 +266,8 @@
         </div>
         <aside class="summary"><div class="row"><span>Subtotal</span><span>${money(sub)}</span></div><div class="row"><span>Estimated Tax</span><span>${money(tax)}</span></div><hr>
           <div class="row total"><span>Total</span><span>${money(sub + tax)}</span></div>
-          <button class="kb kb--ghost kb--lg" data-print>${u8('i16')}Print Shopping List</button>
-          <button class="kb kb--lg" data-go="checkout" ${ids.length ? '' : 'disabled'}>${u8('i15')}Proceed to Purchase</button>
+          <button class="kb kb--ghost kb--lg" data-print>${u8("i16")}Print List</button>
+          <button class="kb kb--lg" data-go="checkout" ${ids.length ? '' : 'disabled'}>${u8("i15")}Checkout</button>
           <p class="save">Your printed list is sorted by aisle, so you can walk the store once — no doubling back.</p></aside></div></div>`;
     },
 
@@ -342,8 +342,8 @@
     <button data-go="orders"><i data-u8="i12"></i>Your Past Orders</button>
     <button data-go="cart"><i data-u8="i15"></i>Review Your Cart</button><hr>
     <button class="sw" id="bigText">Larger text<i></i></button>
-    <button data-help><i data-u8="i11"></i>Call a ULTIM8 Helper</button>
-    <button data-restart><i data-u8="spark"></i>Start over</button>
+    <button data-help><i data-u8="i11"></i>Call Helper</button>
+    <button data-restart><i data-u8="spark"></i>Start Over</button>
     <div class="menu__foot">Kiosk 2 · Produce entrance</div>`;
   u8.hydrate(menu); u8.hydrate($('#kh'));
   $('#menuBtn').addEventListener('click', () => { scrim.classList.add('on'); menu.classList.add('on'); });
@@ -371,7 +371,7 @@
       ${Object.keys(groups).sort((a, b) => a - b).map(a => `<div class="r-aisle">AISLE ${a} · ${AISLES[a - 1].toUpperCase()}</div>${groups[a].map(([n, pr]) => `<div class="r-row"><i></i><span>${n}</span><span>${pr}</span></div>`).join('')}`).join('')}
       <hr><div class="r-tot"><span>EST. TOTAL</span><span>${money(sub * (1 + TAX))}</span></div><div class="r-c" style="font-size:15px">incl. est. tax ${money(sub * TAX)}</div>
       <div class="bar"></div><div class="r-c">HAVE A GREAT SHOP!</div>
-      <div class="r-acts"><button class="kb kb--quiet" data-closeprint>Take my list</button><button class="kb" data-go="checkout" data-closeprint>Proceed to Purchase</button></div>`;
+      <div class="r-acts"><button class="kb kb--quiet" data-closeprint>Take List</button><button class="kb" data-go="checkout" data-closeprint>Checkout</button></div>`;
     u8.hydrate(paper);
     scrim.classList.add('on'); printer.classList.add('on'); paper.scrollTop = 0;
   }
@@ -403,7 +403,7 @@
     if (d.cat) { S.find = { cat: d.cat, sub: 'All', q: '' }; if (S.screen === 'orders') return go('find'); return render(true); }
     if (d.sub) { S.find.sub = d.sub; return render(true); }
     if (d.clear) { if (d.clear === 'orderSearch') S.ordQ = ''; else S.find.q = ''; return render(true); }
-    if (d.listadd) { const c = CATS.find(c => c.id === d.listadd); addList({ name: c.name, qty: '', aisle: c.aisle }); toast(`${c.name} added to your shopping list`, 'View cart', () => go('cart')); return render(true); }
+    if (d.listadd) { const c = CATS.find(c => c.id === d.listadd); addList({ name: c.name, qty: '', aisle: c.aisle }); toast(`${c.name} added to your shopping list`, "View Cart", () => go("cart")); return render(true); }
     if (d.map) return openSheet(`<div class="pd__where"><h2 style="font-weight:400;font-size:52px;margin:0 0 10px">Aisle ${d.map}: ${AISLES[d.map - 1]}</h2><p style="font-size:24px;color:var(--soft);margin:0 0 26px">Walk past the produce tables and look for the orange aisle sign.</p>${mapHtml(+d.map)}</div>`);
     // recipes
     if (d.rtab) { S.recTab = d.rtab; return render(true); }
@@ -413,7 +413,7 @@
     if (d.addrecipe !== undefined) {
       const r = RECIPES.find(x => x.id === S.recipeId), off = S.recipeOff[r.id] || {}, f = S.serves / 4; let n = 0;
       r.items.forEach((it, i) => { if (off[i]) return; n++; if (Array.isArray(it)) S.cart[it[0]] = qty(it[0]) + Math.max(1, Math.round(it[1] * f)); else addList(it); });
-      updateBadge(); toast(`${n} ${r.name} ingredients added`, 'View cart', () => go('cart')); return render(true);
+      updateBadge(); toast(`${n} ${r.name} ingredients added`, "View Cart", () => go("cart")); return render(true);
     }
     // compare
     if (d.cmprm) { S.compare = S.compare.filter(x => x !== d.cmprm); if (S.cmpPick === d.cmprm) S.cmpPick = null; return render(true); }
@@ -428,8 +428,8 @@
     // orders
     if (d.otab) { S.ordTab = d.otab; return render(true); }
     if (d.openorder) { S.openOrder = S.openOrder === d.openorder ? null : d.openorder; return render(true); }
-    if (d.reorder) { const o = ORDERS.find(o => o.no === d.reorder); o.items.forEach(([id, c]) => S.cart[id] = qty(id) + c); updateBadge(); return toast(`Order #${o.no} added to your cart`, 'View cart', () => go('cart')); }
-    if (d.addlist) { const l = LISTS[+d.addlist]; l.items.forEach(id => S.cart[id] = qty(id) + 1); updateBadge(); return toast(`“${l.name}” added to your cart`, 'View cart', () => go('cart')); }
+    if (d.reorder) { const o = ORDERS.find(o => o.no === d.reorder); o.items.forEach(([id, c]) => S.cart[id] = qty(id) + c); updateBadge(); return toast(`Order #${o.no} added to your cart`, "View Cart", () => go("cart")); }
+    if (d.addlist) { const l = LISTS[+d.addlist]; l.items.forEach(id => S.cart[id] = qty(id) + 1); updateBadge(); return toast(`“${l.name}” added to your cart`, "View Cart", () => go("cart")); }
     // cart
     if (d.cstep) return setQty(d.cstep, qty(d.cstep) + +d.d, true);
     if (d.crm) { const n = P[d.crm].name; setQty(d.crm, 0, true); return toast(`${n} removed`); }
@@ -456,7 +456,7 @@
     idle = setTimeout(() => {
       if (S.screen === 'welcome') return;
       let n = 15;
-      openSheet(`<div class="idle"><h2>Still shopping?</h2><p>We’ll start a fresh session in <b id="idleN">${n}</b> seconds to keep your cart private.</p><div class="acts"><button class="kb kb--lg" data-close>I’m still here</button><button class="kb kb--ghost kb--lg" data-restart>Start over</button></div></div>`);
+      openSheet(`<div class="idle"><h2>Still shopping?</h2><p>We’ll start a fresh session in <b id="idleN">${n}</b> seconds to keep your cart private.</p><div class="acts"><button class="kb kb--lg" data-close>Keep Shopping</button><button class="kb kb--ghost kb--lg" data-restart>Start Over</button></div></div>`);
       const iv = setInterval(() => { n--; const el = $('#idleN'); if (!el || !sheet.classList.contains('on')) return clearInterval(iv); el.textContent = n; if (n <= 0) { clearInterval(iv); restart(); } }, 1000);
     }, IDLE_MS);
   }
