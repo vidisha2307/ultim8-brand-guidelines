@@ -226,7 +226,7 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
       const list = RECIPES.filter(r => S.recTab === 'All' || r.tags.includes(S.recTab));
       return `<div class="page">${pageHead('Quick &amp; Easy Recipes', 'Shop ingredients for your favorite meals.')}
         <div class="tabs">${tabs.map(t => `<button class="${t === S.recTab ? 'on' : ''}" data-rtab="${t}">${t}</button>`).join('')}</div>
-        ${S.recTab === 'All' ? recipeRow('Quick Breakfasts', 'Breakfast') + recipeRow('Easy Lunches', 'Lunch') + recipeRow('Dinner Tonight', 'Dinner') + recipeRow('Vegetarian Favorites', 'Vegetarian') : `<div class="grid">${list.map(recipeCard).join('')}</div>`}</div>`;
+        <div class="grid">${list.map(recipeCard).join('')}</div></div>`;
     },
 
     recipe: () => {
@@ -374,12 +374,12 @@ function noWidow(root) {
     Object.entries(S.cart).forEach(([id, q]) => { const p = P[id]; (groups[p.aisle] = groups[p.aisle] || []).push([`${q} × ${p.name}`, money(p.price * q)]); });
     S.list.forEach(l => (groups[l.aisle] = groups[l.aisle] || []).push([`${l.qty ? l.qty + ' ' : ''}${l.name}`, '']));
     const sub = subtotal(), d = new Date();
-    paper.innerHTML = `<i data-u8="wordmark" class="r-logo"></i><div class="r-t">SHOPPING LIST</div><div class="r-s">LESS TO DECIDE. MORE TO ENJOY.</div><i data-u8="spark" class="r-spark"></i>
+    paper.innerHTML = `<i data-u8="wordmark" class="r-logo"></i><div class="r-t">SHOPPING LIST</div><div class="r-s">LESS TO DECIDE. MORE TO ENJOY.</div><div class="r-spark-row"><span></span><i data-u8="spark" class="r-spark"></i><span></span></div>
       <div class="r-c">KIOSK 2 · ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase()} · ${d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</div><hr>
       ${Object.keys(groups).sort((a, b) => a - b).map(a => `<div class="r-aisle">AISLE ${a} · ${AISLES[a - 1].toUpperCase()}</div>${groups[a].map(([n, pr]) => `<div class="r-row"><i></i><span>${n}</span><span>${pr}</span></div>`).join('')}`).join('')}
       <hr><div class="r-tot"><span>EST. TOTAL</span><span>${money(sub * (1 + TAX))}</span></div><div class="r-c" style="font-size:15px">incl. est. tax ${money(sub * TAX)}</div>
-      <div class="bar"></div><div class="r-c">HAVE A GREAT SHOP!</div>
-      <div class="r-acts"><button class="kb" data-closeprint>Take List</button></div>`;
+      <div class="bar"></div><div class="r-c">Happy Shopping!</div>
+      <div class="r-acts"><button class="kb" data-closeprint>Print Now</button></div>`;
     u8.hydrate(paper);
     scrim.classList.add('on'); printer.classList.add('on'); paper.scrollTop = 0;
   }
@@ -399,7 +399,7 @@ function noWidow(root) {
     if (!t) return;
     const d = t.dataset;
     if (d.start !== undefined) return go('home');
-    if (d.closeprint !== undefined) { closePrint(); if (d.go) go(d.go); else toast('Your list is printed — enjoy your shop!'); return; }
+    if (d.closeprint !== undefined) { closePrint(); if (d.go) go(d.go); else toast('Your list is printed, enjoy shopping!'); return; }
     if (d.go) return go(d.go);
     if (d.back !== undefined) return back();
     if (d.close !== undefined) return closeAll();

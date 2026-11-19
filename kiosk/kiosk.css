@@ -437,3 +437,8 @@ p, small, .meta, .note-line { text-wrap: pretty; }
 
 /* Find a Product menu: aisle number shows on every category, including the selected one */
 .side button.on small { display: inline; margin-left: auto; }
+
+/* Printed list: small orange lines beside the diamond */
+.paper .r-spark-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 10px 0; }
+.paper .r-spark-row span { width: 46px; height: 2px; background: var(--orange); border-radius: 1px; }
+.paper .r-spark-row .r-spark { margin: 0; }
