@@ -747,3 +747,13 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 /* Vision / Mission / Purpose / Value: Ultim8 Orange on hover, white headline */
 .purpose--home article:hover { background: var(--orange); }
 .purpose--home article:hover h3 { color: var(--white); }
+
+/* Everyday Essentials: both boxes the same height, logo mark centred between them */
+.offer__grid { align-items: stretch; }
+.offer__col { display: flex; flex-direction: column; }
+.offer__col .tags { flex: 1; align-content: space-between; }
+.offer__mark { position: static; align-self: center; justify-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+@media (max-width: 1180px) { .offer__col .tags { align-content: flex-start; } }
+.offer__mark { position: relative; top: auto; }
+.offer__mark p { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+@media (max-width: 1180px) { .offer__mark p { position: static; transform: none; } }
