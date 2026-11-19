@@ -9,7 +9,7 @@
   const TAX = 0.07;
 
   /* ---------------- store data ---------------- */
-  const AISLES = ['Fresh Produce', 'Bakery', 'Dairy & Eggs', 'Frozen Foods', 'Pantry Staples', 'Meat & Seafood', 'Snacks & Beverages', 'Household Essentials', 'Personal Care'];
+  const AISLES = ['Fresh Produce', 'Bakery', 'Dairy & Eggs', 'Frozen Foods', 'Pantry Staples', 'Meat & Seafood', 'Snacks & Beverages', 'Household Essentials', 'Personal Care', 'Home Decor', 'Kids'];
   const CATS = [
     { id: 'produce', name: 'Fresh Produce', aisle: 1, subs: ['All', 'Fruits', 'Vegetables', 'Herbs', 'Salads', 'Organic', 'Seasonal'] },
     { id: 'dairy', name: 'Dairy & Eggs', aisle: 3, subs: ['All', 'Milk', 'Eggs', 'Plant-based'] },
@@ -18,8 +18,24 @@
     { id: 'snacks', name: 'Snacks & Beverages', aisle: 7, note: 'Chips, cookies, juices and sparkling water — all in one aisle.' },
     { id: 'frozen', name: 'Frozen Foods', aisle: 4, note: 'Frozen meals, vegetables and desserts, kept cold along the back wall.' },
     { id: 'household', name: 'Household Essentials', aisle: 8, note: 'Cleaning supplies, paper goods and laundry care.' },
-    { id: 'personal', name: 'Personal Care', aisle: 9, note: 'Skin, hair and oral care — right next to the Pharmacy.' }
+    { id: 'personal', name: 'Personal Care', aisle: 9, note: 'Skin, hair and oral care — right next to the Pharmacy.' },
+    { id: 'decor', name: 'Home Decor', aisle: 10, subs: ['All', 'Living Room', 'Accents'] },
+    { id: 'kids', name: 'Kids Products', aisle: 11, subs: ['All', 'Toys', 'School', 'Everyday'] }
   ];
+/* simple brand-colour illustrations for Home Decor and Kids products */
+const ART = {
+  candle: '<rect x="62" y="70" width="76" height="96" rx="10" fill="#FDD3BB"/><rect x="62" y="104" width="76" height="30" fill="#F26522"/><rect x="97" y="52" width="6" height="20" fill="#111"/><path d="M100 22c10 12 12 22 0 32c-12-10-10-20 0-32z" fill="#FFC83D"/>',
+  pillow: '<rect x="34" y="50" width="132" height="110" rx="26" fill="#F26522"/><path d="M100 78l10 27l-10 27l-10-27z" fill="#FFF2D5"/><path d="M60 92l6 13l-6 13l-6-13zM140 92l6 13l-6 13l-6-13z" fill="#FFF2D5"/>',
+  vase: '<path d="M80 40h40v18c0 10 26 26 26 60c0 30-20 46-46 46s-46-16-46-46c0-34 26-50 26-60z" fill="#CB3727"/><rect x="76" y="34" width="48" height="10" rx="5" fill="#F26522"/><path d="M60 118h80" stroke="#FFF2D5" stroke-width="6"/>',
+  frame: '<rect x="40" y="36" width="120" height="132" rx="6" fill="#111"/><rect x="52" y="48" width="96" height="108" fill="#FFF2D5"/><path d="M52 156l30-40l22 26l14-16l30 30z" fill="#F26522"/><circle cx="124" cy="78" r="10" fill="#FFC83D"/>',
+  basket: '<path d="M38 84h124l-14 80H52z" fill="#FDD3BB"/><path d="M46 104h108M50 124h100M54 144h92" stroke="#F26522" stroke-width="6"/><path d="M62 84c0-40 76-40 76 0" fill="none" stroke="#CB3727" stroke-width="8"/>',
+  crayons: '<g transform="rotate(-12 100 100)"><rect x="52" y="54" width="22" height="100" rx="4" fill="#F26522"/><path d="M52 54l11-22l11 22z" fill="#F26522"/><rect x="89" y="54" width="22" height="100" rx="4" fill="#FFC83D"/><path d="M89 54l11-22l11 22z" fill="#FFC83D"/><rect x="126" y="54" width="22" height="100" rx="4" fill="#CB3727"/><path d="M126 54l11-22l11 22z" fill="#CB3727"/><rect x="48" y="96" width="104" height="14" fill="#111" opacity=".85"/></g>',
+  blocks: '<rect x="36" y="110" width="58" height="58" rx="8" fill="#F26522"/><rect x="104" y="110" width="58" height="58" rx="8" fill="#FFC83D"/><rect x="70" y="46" width="58" height="58" rx="8" fill="#CB3727"/><text x="65" y="150" font-size="34" font-family="Arial" font-weight="700" fill="#fff" text-anchor="middle">A</text><text x="133" y="150" font-size="34" font-family="Arial" font-weight="700" fill="#111" text-anchor="middle">B</text><text x="99" y="86" font-size="34" font-family="Arial" font-weight="700" fill="#fff" text-anchor="middle">8</text>',
+  bear: '<circle cx="62" cy="58" r="20" fill="#CB3727"/><circle cx="138" cy="58" r="20" fill="#CB3727"/><circle cx="100" cy="90" r="46" fill="#F26522"/><ellipse cx="100" cy="150" rx="44" ry="34" fill="#F26522"/><ellipse cx="100" cy="104" rx="18" ry="13" fill="#FDD3BB"/><circle cx="84" cy="84" r="5" fill="#111"/><circle cx="116" cy="84" r="5" fill="#111"/><circle cx="100" cy="100" r="5" fill="#111"/>',
+  bottle: '<rect x="76" y="26" width="48" height="22" rx="6" fill="#111"/><rect x="66" y="46" width="68" height="126" rx="22" fill="#F26522"/><rect x="66" y="96" width="68" height="30" fill="#FFF2D5"/><path d="M100 102l6 9l-6 9l-6-9z" fill="#F26522"/>',
+  book: '<rect x="46" y="38" width="112" height="132" rx="8" fill="#FFC83D"/><rect x="46" y="38" width="18" height="132" rx="6" fill="#CB3727"/><circle cx="112" cy="92" r="24" fill="#F26522"/><rect x="80" y="130" width="64" height="10" rx="5" fill="#111"/>'
+};
+const ARTIMG = k => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">${ART[k]}</svg>`);
   const P = {};
   [
     ['banana', 'Banana', 'produce', ['Fruits'], '1 lb (approx. 3–4 pcs)', .59, 'A', 'Naturally sweet and ready to grab for breakfast or a snack.', { Type: 'Fruit', 'Key Benefits': 'Source of potassium', 'Dietary Notes': 'Vegan' }],
@@ -38,10 +54,20 @@
     ['eggs', 'Large Eggs', 'dairy', ['Eggs'], '12 count', 3.29, 'C', 'Grade A large eggs.', { Type: 'Eggs', 'Key Benefits': 'Source of protein', 'Dietary Notes': 'Gluten-free' }],
     ['pasta', 'Penne Pasta', 'pantry', ['Pasta & Sauces'], '16 oz', 1.89, 'B', 'Classic penne that holds sauce beautifully.', { Type: 'Pasta', 'Key Benefits': 'Ready in 11 minutes', 'Dietary Notes': 'Vegan' }],
     ['tomato-sauce', 'Tomato Sauce', 'pantry', ['Pasta & Sauces'], '24 oz jar', 2.49, 'B', 'Slow-simmered tomato sauce with herbs.', { Type: 'Sauce', 'Key Benefits': 'Ready to heat', 'Dietary Notes': 'Vegan, Gluten-free' }],
-    ['taco-shells', 'Taco Shells', 'pantry', ['International'], '12 count', 2.99, 'D', 'Crunchy corn taco shells.', { Type: 'Tortilla', 'Key Benefits': 'Ready to fill', 'Dietary Notes': 'Gluten-free' }]
+    ['taco-shells', 'Taco Shells', 'pantry', ['International'], '12 count', 2.99, 'D', 'Crunchy corn taco shells.', { Type: 'Tortilla', 'Key Benefits': 'Ready to fill', 'Dietary Notes': 'Gluten-free' }],
+    ['candle', 'Citrus Cedar Candle', 'decor', ['Accents'], '8 oz jar', 8.99, 'A', 'Our No. 8 citrus and cedar scent, poured in a reusable jar.', { Type: 'Candle', 'Burn Time': '40 hours' }],
+    ['pillow', 'Diamond Throw Pillow', 'decor', ['Living Room'], '18 × 18 in', 14.99, 'B', 'Soft woven cushion with our diamond pattern.', { Type: 'Cushion', Care: 'Removable, washable cover' }],
+    ['vase', 'Ceramic Vase', 'decor', ['Accents'], '10 in tall', 12.49, 'B', 'Glazed ceramic vase for fresh or dried flowers.', { Type: 'Vase', Material: 'Ceramic' }],
+    ['frame', 'Picture Frame', 'decor', ['Living Room'], '5 × 7 in', 6.99, 'C', 'Slim black frame for your favorite photo.', { Type: 'Frame', Material: 'Wood' }],
+    ['basket', 'Woven Storage Basket', 'decor', ['Living Room'], 'Medium', 11.99, 'C', 'Handy storage for blankets, toys or produce.', { Type: 'Basket', Material: 'Seagrass' }],
+    ['crayons', 'Crayons', 'kids', ['School'], '24 count', 2.99, 'A', 'Bright, non-toxic crayons for little artists.', { Type: 'Art supplies', Ages: '3+' }],
+    ['blocks', 'Building Blocks', 'kids', ['Toys'], '60 pieces', 19.99, 'B', 'Chunky blocks for building, stacking and learning letters.', { Type: 'Toy', Ages: '2+' }],
+    ['bear', 'Plush Bear', 'kids', ['Toys'], '12 in', 9.99, 'B', 'Extra-soft bear, ready for cuddles.', { Type: 'Toy', Ages: '0+' }],
+    ['bottle', 'Kids Water Bottle', 'kids', ['Everyday'], '12 oz', 7.49, 'C', 'Spill-proof bottle that fits in lunch bags.', { Type: 'Bottle', Material: 'BPA-free' }],
+    ['book', 'Picture Book', 'kids', ['School'], 'Hardcover', 5.99, 'D', 'A colorful story for bedtime reading.', { Type: 'Book', Ages: '3–6' }]
   ].forEach(([id, name, cat, subs, unit, price, shelf, desc, spec]) => {
     const c = CATS.find(c => c.id === cat);
-    P[id] = { id, name, cat, subs, unit, price, shelf, desc, spec, img: IMG(id), aisle: c.aisle };
+    P[id] = { id, name, cat, subs, unit, price, shelf, desc, spec, img: ART[id] ? ARTIMG(id) : IMG(id), aisle: c.aisle };
   });
   const L = (name, qty, aisle) => ({ list: true, name, qty, aisle });
   const RECIPES = [
@@ -66,7 +92,7 @@
   ];
 
   /* ---------------- state ---------------- */
-  const S = { cart: {}, list: [], compare: ['milk-2', 'milk-whole', 'milk-oat'], cmpStart: 0, cmpPick: null, history: [], screen: 'welcome',
+  const S = { cart: {}, list: [], compare: ['milk-2', 'milk-whole', 'milk-oat'], cmpStart: 0, cmpPick: null, history: [], screen: '',
     find: { cat: 'produce', sub: 'All', q: '' }, recTab: 'All', ordTab: 'All Orders', ordQ: '', serves: 4, recipeOff: {}, method: null };
   const view = $('#view'), screenEl = $('#screen');
 
@@ -182,7 +208,7 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
         <button class="card card--2" data-go="recipes"><i data-u8="i14"></i><h2>Shop by Recipe</h2><p>Get ingredients for your favorite meals</p><span class="circle-go"></span><img src="${IMG('hero-pasta')}" alt=""></button>
         <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>See options and find what’s right for you</p><span class="circle-go"></span><img src="${IMG('hero-milk')}" alt=""></button>
       </div>
-      ${productRow('produce', 'Fresh Produce')}${productRow('dairy', 'Dairy & Eggs')}${recipeRow('Recipe Ideas')}${aisleRow('Find Your Aisle')}</div>`,
+      ${productRow('produce', 'Fresh Produce')}${productRow('dairy', 'Dairy & Eggs')}${productRow('pantry', 'Pantry Staples')}${productRow('decor', 'Home Decor')}${productRow('kids', 'Kids Products')}</div>`,
 
     find: () => `<div class="page">${pageHead('Find a Product', 'Search for your favorite items.', searchBox('findSearch', 'Search products, brands, or categories...', S.find.q))}${browse('find', 4)}
       ${S.find.q ? '' : ['produce', 'dairy', 'pantry'].filter(id => id !== S.find.cat).map(id => productRow(id, 'Also in ' + CATS.find(c => c.id === id).name)).join('') + aisleRow('More Aisles', ['meat', 'snacks', 'frozen', 'household', 'personal'])}</div>`,
@@ -274,12 +300,20 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
     return (ids.find(p => /vegan|dairy-free/i.test((p.spec['Dietary Notes'] || '') + (p.spec['Key Benefits'] || ''))) || ids[0]).id;
   }
 
+/* keep the last two words of every text line together (no widows) */
+function noWidow(root) {
+  $$('h1, h2, h3, h4, p, small, .meta, .unit, .note-line, .save', root).forEach(el => {
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last = null, n;
+    while ((n = w.nextNode())) if (n.nodeValue.trim()) last = n;
+    if (last && el.textContent.trim().split(/\s+/).length > 2) last.nodeValue = last.nodeValue.replace(/\s+(\S+)\s*$/, ' $1');
+  });
+}
   /* ---------------- render & navigation ---------------- */
   function render(keepScroll) {
     const top = view.scrollTop;
     screenEl.classList.toggle('is-welcome', S.screen === 'welcome');
     view.innerHTML = SCREENS[S.screen]();
-    u8.hydrate(view);
+    u8.hydrate(view); noWidow(view);
     if (keepScroll) { view.scrollTop = top; $$('.page', view).forEach(p => p.style.animation = 'none'); } else view.scrollTop = 0;
     $$('.menu > button[data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === S.screen));
   }
@@ -294,13 +328,13 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
   function back() { const prev = S.history.pop() || 'home'; go(prev, { back: true }); }
   function restart() {
     Object.assign(S, { cart: {}, list: [], compare: ['milk-2', 'milk-whole', 'milk-oat'], cmpStart: 0, cmpPick: null, cmpWhy: null, history: [], find: { cat: 'produce', sub: 'All', q: '' }, recTab: 'All', ordTab: 'All Orders', ordQ: '', serves: 4, recipeOff: {}, method: null, openOrder: null });
-    $('#cartCount').textContent = 0; closePrint(); S.screen = ''; go('welcome');
+    $('#cartCount').textContent = 0; closePrint(); S.screen = ''; go('home');
   }
 
   /* ---------------- overlays ---------------- */
   const scrim = $('#scrim'), menu = $('#menu'), sheet = $('#sheet');
   function closeAll() { scrim.classList.remove('on'); menu.classList.remove('on'); sheet.classList.remove('on'); }
-  function openSheet(html) { sheet.innerHTML = `<button class="sheet__x" data-close aria-label="Close">×</button>` + html; u8.hydrate(sheet); scrim.classList.add('on'); sheet.classList.add('on'); }
+  function openSheet(html) { sheet.innerHTML = `<button class="sheet__x" data-close aria-label="Close">×</button>` + html; u8.hydrate(sheet); noWidow(sheet); scrim.classList.add('on'); sheet.classList.add('on'); }
   menu.innerHTML = `<div class="menu__top"><i data-u8="wordmark"></i><button class="menu__close" data-close aria-label="Close menu">×</button></div>
     <button data-go="home"><i data-u8="mark8"></i>Home</button>
     <button data-go="find"><i data-u8="i10"></i>Find a Product</button>
@@ -420,7 +454,7 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
   function poke() {
     clearTimeout(idle);
     idle = setTimeout(() => {
-      if (S.screen === 'welcome') return;
+      if (S.screen === 'home' && !cartCount()) return;
       let n = 15;
       openSheet(`<div class="idle"><h2>Still shopping?</h2><p>We’ll start a fresh session in <b id="idleN">${n}</b> seconds to keep your list private.</p><div class="acts"><button class="kb kb--lg" data-close>Keep Shopping</button><button class="kb kb--ghost kb--lg" data-restart>Start Over</button></div></div>`);
       const iv = setInterval(() => { n--; const el = $('#idleN'); if (!el || !sheet.classList.contains('on')) return clearInterval(iv); el.textContent = n; if (n <= 0) { clearInterval(iv); restart(); } }, 1000);
@@ -439,7 +473,7 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
   const embed = new URLSearchParams(location.search).has('embed');
   document.body.classList.toggle('embed', embed);
   function fit() {
-    const dev = $('#device'), pad = embed ? 0 : 36, stand = embed ? 0 : 330, w = 1920 + pad, h = 1080 + pad;
+    const dev = $('#device'), pad = embed ? 0 : 36, stand = 0, w = 1920 + pad, h = 1080 + pad;
     const s = Math.min(innerWidth / (w + (embed ? 0 : 120)), innerHeight / (h + stand + (embed ? 0 : 140)));
     dev.style.transform = `scale(${s})`; dev.style.transformOrigin = 'center top';
     dev.style.position = 'absolute'; dev.style.left = '50%'; dev.style.top = '50%';
@@ -447,5 +481,5 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
   }
   addEventListener('resize', fit); fit();
 
-  go('welcome', { force: true });
+  go('home', { force: true });
 })();

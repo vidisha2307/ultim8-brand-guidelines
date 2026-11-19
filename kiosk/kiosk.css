@@ -411,3 +411,13 @@ body.embed .stand { display: none; }
 .aisle-tile b { color: var(--orange); font-weight: 600; font-size: calc(22px * var(--k)); }
 .aisle-tile span { font-size: calc(28px * var(--k)); font-weight: 400; line-height: 1.15; }
 .cards { grid-template-columns: repeat(3, 1fr); margin-bottom: 8px; }
+
+/* Simple touchscreen (no monitor stand); same slim black border */
+.stand { display: none; }
+/* Home cards: icons left-aligned, smaller arrow buttons */
+.card .u8 { align-self: flex-start; width: auto; }
+.card .circle-go { width: 48px; height: 48px; }
+.card .circle-go::after { width: 11px; height: 11px; border-right-width: 3px; border-top-width: 3px; margin-left: -4px; }
+/* No widows */
+h1, h2, h3 { text-wrap: balance; }
+p, small, .meta, .note-line { text-wrap: pretty; }
