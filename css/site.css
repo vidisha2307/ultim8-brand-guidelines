@@ -830,3 +830,9 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 #signature-logo .logo-main .room__controls { max-width: 420px; margin: 16px auto 0; }
 #signature-logo .logo-main .room__warn { max-width: 420px; margin: 12px auto 0; }
 #signature-logo .logo-main { grid-column: 7 / -1; }
+
+/* Primary Logo: logo inside a container on the right; no dotted guide; clear-space boxes as Neutral Gray outlines */
+#signature-logo .logo-main .room__stage { border: 1px solid var(--grey); border-radius: 16px; background: var(--white); min-height: 420px; padding: 40px; box-sizing: border-box; overflow: hidden; }
+#signature-logo .logo-main .room__stage.is-tight { border-color: var(--orange); }
+#signature-logo .room__guide { display: none; }
+#signature-logo .room__x { background: none; box-shadow: inset 0 0 0 1.5px var(--grey); color: #9a9a9a; }
