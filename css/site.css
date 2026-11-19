@@ -757,3 +757,16 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .offer__mark { position: relative; top: auto; }
 .offer__mark p { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 @media (max-width: 1180px) { .offer__mark p { position: static; transform: none; } }
+
+/* Everyday Essentials: keep the 8 centred between Product Pantry and Service Basket at every screen size */
+@media (max-width: 1180px) and (min-width: 861px) {
+  .offer__grid { grid-template-columns: 1fr 180px 1fr; }
+  .offer__mark { order: 0; align-self: center; }
+  .offer__mark .stage8 { height: 210px; }
+  .offer__mark p { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); }
+  .offer__col .tags { align-content: space-between; }
+}
+@media (max-width: 860px) {
+  .offer__mark { order: 0; margin: 12px 0; }
+}
+.offer__mark .stage8 { aspect-ratio: 232 / 320; width: auto; flex: none; }
