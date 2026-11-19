@@ -805,3 +805,6 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .pager { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 40px var(--m); }
 .pager a, .pager a.btn--ghost { font-size: 15px; font-weight: 600; padding: 0 24px; border-radius: var(--btn-r); background: var(--white); color: var(--orange); box-shadow: inset 0 0 0 2px var(--orange); text-align: center; }
 .pager a:hover { background: var(--orange); color: var(--white); }
+
+/* Inner pages: orange pattern band behind the floating header, then the first subsection */
+.page-top { height: calc(var(--nav) + 36px); background: url(../assets/brand/svg/pattern-diamond.svg) 0 100% / max(560px, 70vw) auto repeat-x var(--orange); }
