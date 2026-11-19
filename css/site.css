@@ -730,3 +730,7 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 
 /* Homepage brand story quote box: no orange border */
 .story__quote { border-left: 0; }
+
+/* Homepage Vision / Mission / Purpose / Value boxes: peach, grey on hover */
+.purpose--home article { background: var(--peach); }
+.purpose--home article:hover { background: var(--grey); }
