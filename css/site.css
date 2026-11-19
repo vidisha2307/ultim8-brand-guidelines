@@ -889,3 +889,7 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .dd__arrow svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .dd__arrow--prev { left: 6px; } .dd__arrow--next { right: 6px; }
 .dd__arrow, .dd__arrow:hover { color: var(--ink); filter: drop-shadow(0 0 2px rgba(255,255,255,.9)); }
+
+/* Logo Variations: Icon + wider Environmental graphic (receipt removed) */
+#logo-variety .apply { grid-template-columns: 1fr 2fr; }
+#logo-variety .aisle-sign { width: 100%; box-sizing: border-box; justify-content: center; padding: 18px 24px; }

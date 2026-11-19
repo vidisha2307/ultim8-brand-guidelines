@@ -222,14 +222,11 @@
     const appSet = makeStage($('.stage8', $('#applyApp')), KEYS);
     $('#applySign').innerHTML = `<div class="stage8" style="width:44px;height:56px;color:var(--white)"></div><b id="signName">Logo Mark</b>`;
     const signSet = makeStage($('.stage8', $('#applySign')), KEYS);
-    $('#applyReceipt').innerHTML = `<div class="stage8" style="height:38px;color:var(--ink);margin-bottom:6px"></div>ULTIM8<br>LESS TO DECIDE. MORE TO ENJOY.<br>- - - - - - - - - -<br><span id="rcptName">STORE #0147</span>`;
-    const rcptSet = makeStage($('.stage8', $('#applyReceipt')), KEYS);
     let s8 = 0, timer = null;
     function go8(i) {
-      s8 = (i + 7) % 7; setStage(s8); appSet(s8); signSet(s8); rcptSet(s8);
+      s8 = (i + 7) % 7; setStage(s8); appSet(s8); signSet(s8);
       range.value = s8; $('#s8Name').textContent = NAMES[s8]; $('#s8Count').textContent = `${s8 + 1} / 7`;
       $('#signName').textContent = s8 ? NAMES[s8] : 'ULTIM8';
-      $('#rcptName').textContent = s8 ? NAMES[s8].toUpperCase() + ' COUNTER' : 'STORE #0147';
       $$('button', ticks).forEach((b, j) => b.classList.toggle('is-on', j === s8));
     }
     const play = $('#s8Play');
