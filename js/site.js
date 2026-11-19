@@ -541,7 +541,9 @@
   });
   $$('[data-copy]').forEach(b => b.addEventListener('click', e => {
     e.preventDefault(); e.stopPropagation();
-    const det = b.closest('details'); const txt = det.querySelector('summary').childNodes[0].textContent.trim() + '\n' + det.querySelector('.acc__body').innerText.trim();
+    const det = b.closest('details'), body = det.querySelector('.acc__body').cloneNode(true);
+    body.querySelectorAll('[data-copy]').forEach(x => x.remove());
+    const txt = det.querySelector('summary').textContent.trim() + '\n' + (body.innerText || body.textContent).trim();
     navigator.clipboard?.writeText(txt).catch(() => {}); toast('Prompt copied');
   }));
   when('#checklist', () => {

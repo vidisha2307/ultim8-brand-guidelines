@@ -1100,3 +1100,20 @@ body[data-page="02"] .spread p, body[data-page="02"] .spread li { text-align: le
 /* Icons: the 4 tiles in each row span exactly the width of the structure box */
 #icons-bites .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 #icons-bites .icon-grid button { width: 100% !important; height: auto !important; min-width: 0; padding: 18%; }
+
+/* Experiential: all text left-aligned with the headings */
+body[data-page="03"] .spread > .copy { grid-column: 1 / span 5; text-align: left; }
+body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page="03"] .acc summary { text-align: left; }
+
+/* AI Prompts: Permanent and Flexible, full width within the margins */
+#permanent-staples .title { grid-column: 1 / span 6; grid-row: 1; }
+#permanent-staples .prompts { grid-column: 1 / -1; grid-row: 2; }
+.prompts__sub { margin: 8px 0 14px; font-weight: 600; font-size: clamp(24px, 2.2vw, 32px); color: var(--orange); text-transform: uppercase; }
+.prompts .accordion + .prompts__sub { margin-top: 48px; }
+#permanent-staples .accordion { grid-column: auto; }
+#permanent-staples .ai-check-copy { grid-column: 1 / span 5; grid-row: 3; margin-top: 64px; }
+#permanent-staples .checklist { grid-column: 7 / -1; grid-row: 3; margin-top: 64px; }
+/* Copy as a text link at the end of each prompt, seen only when the prompt is open */
+.copy-link { display: inline-block; margin-top: 4px; padding: 0; border: 0; background: none; font: inherit; font-size: 14px; font-weight: 600; color: var(--orange); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.copy-link:hover { color: var(--deep); }
+@media (max-width: 860px) { #permanent-staples .ai-check-copy, #permanent-staples .checklist { grid-column: 1 / -1; grid-row: auto; } }
