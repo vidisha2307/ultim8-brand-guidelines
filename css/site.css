@@ -715,3 +715,11 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
   .menu-item__toggle { border-radius: var(--btn-r); }
   .tagline__langs .chip { color: var(--orange); box-shadow: inset 0 0 0 2px var(--orange); }
 }
+
+/* Header: rounded rectangle with comfortable padding around the text */
+.nav { top: 12px; left: 16px; right: 16px; padding: 0 32px; border: 1px solid var(--grey); border-radius: 16px; box-shadow: 0 6px 20px rgba(17,17,17,.08); }
+@media (max-width: 1180px) {
+  .nav { padding: 0 12px 0 24px; }
+  .nav__menu { top: calc(var(--nav) + 20px); left: 16px; right: 16px; border-radius: 16px; }
+}
+.progress { top: calc(var(--nav) + 14px); }
