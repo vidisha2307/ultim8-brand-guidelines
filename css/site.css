@@ -1144,3 +1144,7 @@ body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page=
 /* Brand Look: the box resizes smoothly to each photo's shape */
 #brand-look .look__frame { transition: width .45s ease, height .45s ease; max-width: 100%; }
 #brand-look .look__img { object-fit: cover; }
+
+/* AI Prompts: Permanent / Flexible use the same subheading style as Primary and Secondary (black, title case) */
+.prompts__sub { font-weight: 600; font-size: 14px; color: var(--ink); text-transform: none; margin: 0 0 12px; }
+.prompts .accordion + .prompts__sub { margin-top: 40px; }
