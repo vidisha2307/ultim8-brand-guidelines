@@ -382,21 +382,30 @@
   });
   when('#diamondText', () => $('#diamondText').addEventListener('click', e => { const on = $('#diamondView').classList.toggle('is-text'); e.target.classList.toggle('is-on', on); }));
 
-  /* TYPEFACE TESTER: type your own text and see every Pacaembu weight */
-  when('#typeTester', () => {
-    const W = { 300: 'Light', 400: 'Regular', 600: 'Semibold' };
-    const txt = $('#ttText'), size = $('#ttSize'), prev = $('#ttPreview'), all = $('#ttAll');
-    let w = 400;
-    const esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-    function draw() {
-      const t = esc(txt.value || 'Less to Decide. More to Enjoy.'), px = +size.value;
-      $('#ttSizeOut').textContent = px + ' px';
-      prev.style.fontWeight = w; prev.style.fontSize = px + 'px'; prev.innerHTML = t;
-      all.innerHTML = Object.entries(W).map(([k, n]) => `<div class="tt__row ${+k === w ? 'is-on' : ''}"><div class="tt__sample" style="font-weight:${k}">${t}</div><div class="tt__meta"><span>Pacaembu ${n} · ${k}</span></div></div>`).join('');
-    }
-    $$('#ttWeights .chip').forEach(b => b.addEventListener('click', () => { w = +b.dataset.w; $$('#ttWeights .chip').forEach(x => x.classList.toggle('is-on', x === b)); draw(); }));
-    txt.addEventListener('input', draw); size.addEventListener('input', draw);
-    draw();
+  /* FONT USAGE: a size bar under every line */
+  when('#typeTester', () => $$('#typeTester .type-row').forEach(row => {
+    const txt = row.querySelector('[contenteditable]'), r = row.querySelector('.type-size input'), out = row.querySelector('.type-size output');
+    if (!r) return;
+    r.addEventListener('input', () => { txt.style.fontSize = r.value + 'px'; out.textContent = r.value + ' px'; });
+  }));
+
+  /* ICONS: the icon group is sized to match the height of the text beside it, inside the margins */
+  when('#icons-bites .icon-grid', () => {
+    const grid = $('#icons-bites .icon-grid'), copy = $('#icons-bites .copy');
+    const fit = () => {
+      if (innerWidth <= 860) { grid.style.removeProperty('--tile'); return; }
+      const gap = 14, h = copy.offsetHeight, w = grid.getBoundingClientRect().width, n = grid.children.length;
+      /* pick the column count whose grid height comes closest to the text height, without leaving the margins */
+      let best = null;
+      [4, 3, 2].forEach(c => {
+        const rows = Math.ceil(n / c), t = Math.floor(Math.min((h - gap * (rows - 1)) / rows, (w - gap * (c - 1)) / c));
+        const diff = Math.abs(rows * t + gap * (rows - 1) - h);
+        if (!best || diff < best.diff) best = { c, t, diff };
+      });
+      grid.style.setProperty('--cols', best.c);
+      grid.style.setProperty('--tile', Math.max(48, best.t) + 'px');
+    };
+    addEventListener('resize', fit); addEventListener('load', fit); document.fonts?.ready.then(fit); fit();
   });
 
   /* PATTERNS MIX: one slider for all three patterns, with brand color options */

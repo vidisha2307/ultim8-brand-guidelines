@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="u8-version" content="44">
-<script>/* always show the latest published version */(function(){var v='44';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
+<meta name="u8-version" content="45">
+<script>/* always show the latest published version */(function(){var v='45';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
 <title>Secondary — ULTIM8 Brand Guidelines</title>
 <meta name="description" content="ULTIM8 Brand Guidelines, Aisle 02: Primary Identity.">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://use.typekit.net/bsr5idk.css">
-<link rel="stylesheet" href="css/site.css?v=37">
+<link rel="stylesheet" href="css/site.css?v=40">
 </head>
 <body class="" data-page="02">
 <header class="nav" id="siteHeader">
@@ -51,20 +51,11 @@
     </div>
   </div>
   <div class="tt reveal" id="typeTester">
-    <p class="label">Try the Typeface</p>
-    <label class="tt__input"><span>Type your own text</span><textarea id="ttText" rows="2" spellcheck="false">Less to Decide. More to Enjoy.</textarea></label>
-    <div class="tt__controls">
-      <div class="chips" id="ttWeights"><button class="chip" data-w="300">Light</button><button class="chip is-on" data-w="400">Regular</button><button class="chip" data-w="600">Semibold</button></div>
-      <div class="range-row"><span>Size</span><input type="range" id="ttSize" min="16" max="120" value="56" aria-label="Text size"><output id="ttSizeOut">56 px</output></div>
-    </div>
-    <div class="tt__preview" id="ttPreview"></div>
-    <p class="label" style="margin-top:24px">All Weights</p>
-    <div class="tt__all" id="ttAll"></div>
-    <p class="label" style="margin-top:20px">Font Usage <span class="hint" style="font-weight:300">— click any line and type to test</span></p>
-    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:400;font-size:44px">XL HEADLINE</div><small>Pacaembu Regular</small></div>
-    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:600;font-size:32px">HEADLINE</div><small>Pacaembu Semibold</small></div>
-    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:600;font-size:22px">Sub Headline</div><small>Pacaembu Semibold</small></div>
-    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:300;font-size:18px">Body Copy</div><small>Pacaembu Light</small></div>
+    <p class="label">Font Usage <span class="hint" style="font-weight:300">— click any line and type to test</span></p>
+    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:400;font-size:44px">XL HEADLINE</div><small>Pacaembu Regular</small><div class="range-row type-size"><span>Size</span><input type="range" min="12" max="96" value="44" aria-label="Text size"><output>44 px</output></div></div>
+    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:600;font-size:32px">HEADLINE</div><small>Pacaembu Semibold</small><div class="range-row type-size"><span>Size</span><input type="range" min="12" max="96" value="32" aria-label="Text size"><output>32 px</output></div></div>
+    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:600;font-size:22px">Sub Headline</div><small>Pacaembu Semibold</small><div class="range-row type-size"><span>Size</span><input type="range" min="12" max="96" value="22" aria-label="Text size"><output>22 px</output></div></div>
+    <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:300;font-size:18px">Body Copy</div><small>Pacaembu Light</small><div class="range-row type-size"><span>Size</span><input type="range" min="12" max="96" value="18" aria-label="Text size"><output>18 px</output></div></div>
   </div>
 </section>
 
@@ -151,6 +142,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="assets/brand/svg/marks.js?v=3"></script>
 <script src="assets/brand/u8.js?v=3"></script>
-<script src="js/site.js?v=15"></script>
+<script src="js/site.js?v=17"></script>
 </body>
 </html>

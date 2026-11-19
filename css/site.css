@@ -1071,3 +1071,19 @@ body[data-page="02"] .spread p, body[data-page="02"] .spread li { text-align: le
 #icons-bites .icon-construct { grid-row: 1 / span 2 !important; }
 #icons-bites .icon-grid { grid-row: 3 !important; }
 @media (max-width: 860px) { #icons-bites .copy, #icons-bites .icon-construct, #icons-bites .icon-grid { grid-row: auto !important; } }
+
+/* Font Usage: size bar under each line */
+.type-size { margin-top: 6px; }
+.type-size input { flex: 1; }
+.type-size output { min-width: 52px; text-align: right; font-size: 13px; }
+#typeTester .type-row { cursor: text; }
+
+/* Icons: small tiles, kept inside the margins; the group matches the text height */
+#icons-bites .icon-construct { grid-row: 1 !important; width: auto; max-width: 100%; padding: 12px; display: flex; align-items: center; gap: 14px; }
+#icons-bites .icon-construct img { height: 150px; width: auto; }
+#icons-bites .fig-tag { margin: 0; max-width: 120px; }
+#icons-bites .copy { grid-row: 2 !important; }
+#icons-bites .icon-grid { grid-row: 2 !important; margin-top: 0; justify-self: end; align-self: start; grid-template-columns: repeat(4, var(--tile, 1fr)); gap: 14px; width: 100%; justify-content: end; }
+#icons-bites .icon-grid button { width: var(--tile, auto); height: var(--tile, auto); padding: 20%; box-sizing: border-box; }
+#icons-bites .icon-grid { grid-template-columns: repeat(var(--cols, 4), var(--tile, 1fr)); }
+#icons-bites .icon-construct { margin-bottom: 20px; }
