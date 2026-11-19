@@ -119,6 +119,57 @@
     setMono(1);
   });
 
+  /* LOGO DO'S AND DON'TS: two containers, same navigation (big view + caption + thumbnails) */
+  when('#logo-dos', () => {
+    const P = 'assets/img/photos/';
+    const DOS = [
+      { bg: 'var(--white)', logo: 'var(--orange)', name: 'Ultim8 Orange on white' },
+      { bg: 'var(--orange)', logo: 'var(--white)', name: 'White on Ultim8 Orange' },
+      { bg: 'var(--deep)', logo: 'var(--white)', name: 'White on Deep Orange' },
+      { bg: 'var(--peach)', logo: 'var(--ink)', name: 'Black on Peach' },
+      { bg: 'var(--butter)', logo: 'var(--ink)', name: 'Black on Buttercream' },
+      { bg: 'url(assets/brand/svg/pattern-diamond.svg) 0 100% / 70% auto repeat-x var(--orange)', logo: 'var(--white)', name: 'White on the diamond pattern' },
+      { bg: 'var(--white)', logo: 'var(--orange)', name: 'Minimum size, with clear space', small: true },
+      { bg: `url(${P}shopper-focused.jpg) center/cover`, logo: 'var(--white)', name: 'White on photography', cls: 'is-photo' },
+      { bg: `url(${P}shopper-cereal.jpg) center/cover`, logo: 'var(--white)', name: 'White on photography', cls: 'is-photo' },
+      { bg: `url(${P}pharmacy-interior.jpg) center/cover`, logo: 'var(--ink)', name: 'Black on light photography', cls: 'is-photo-light' }
+    ];
+    const DONTS = [
+      'Don’t change the logo color', 'Don’t rearrange the logo elements', 'Don’t stack or repeat the 8',
+      'Don’t resize parts of the logo', 'Don’t cut or crop the letters', 'Don’t add outlines or strokes',
+      'Don’t use an outline-only logo', 'Don’t use low-contrast colors', 'Don’t place it on busy patterns'
+    ];
+    const doStage = $('#doStage'), doGrid = $('#doGrid'), dontImg = $('#dontImg'), dontGrid = $('#dontGrid');
+    const paint = (el, d) => {
+      el.style.background = d.bg;
+      el.style.boxShadow = d.bg === 'var(--white)' ? 'inset 0 0 0 1px var(--grey)' : 'none';
+    };
+    DOS.forEach((d, i) => {
+      const b = document.createElement('button'); b.setAttribute('aria-label', d.name);
+      b.className = (d.cls || '') + (d.small ? ' is-small' : '');
+      paint(b, d); b.innerHTML = u8('wordmark'); b.querySelector('svg').style.color = d.logo;
+      b.addEventListener('click', () => setDo(i)); doGrid.appendChild(b);
+    });
+    function setDo(i) {
+      const d = DOS[i];
+      doStage.className = 'dd__stage ' + (d.cls || '') + (d.small ? ' is-small' : '');
+      paint(doStage, d); doStage.querySelector('svg').style.color = d.logo;
+      $('#doName').textContent = d.name;
+      $$('button', doGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
+    }
+    DONTS.forEach((name, i) => {
+      const b = document.createElement('button'); b.setAttribute('aria-label', name);
+      b.style.backgroundImage = `url(assets/img/book/donts/dont-${i + 1}.png)`;
+      b.addEventListener('click', () => setDont(i)); dontGrid.appendChild(b);
+    });
+    function setDont(i) {
+      dontImg.src = `assets/img/book/donts/dont-${i + 1}.png`; dontImg.alt = DONTS[i];
+      $('#dontName').textContent = DONTS[i];
+      $$('button', dontGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
+    }
+    setDo(0); setDont(0);
+  });
+
   when('#roomBox', () => {
     const room = $('#roomBox'), roomSvg = $('svg', room), roomRange = $('#roomSize');
     function drawRoom() {

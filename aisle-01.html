@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="u8-version" content="26">
-<script>/* always show the latest published version */(function(){var v='26';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
+<meta name="u8-version" content="27">
+<script>/* always show the latest published version */(function(){var v='27';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
 <title>Primary — ULTIM8 Brand Guidelines</title>
 <meta name="description" content="ULTIM8 Brand Guidelines, Aisle 01: Brand Overview.">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://use.typekit.net/bsr5idk.css">
-<link rel="stylesheet" href="css/site.css?v=25">
+<link rel="stylesheet" href="css/site.css?v=26">
 </head>
 <body class="" data-page="01">
 <header class="nav" id="siteHeader">
@@ -53,38 +53,33 @@
   </div>
 </section>
 
-<section class="spread" id="monochrome-classics" data-aisle="2">
-  <div class="mono reveal">
-    <h2 class="title" style="margin-bottom:24px">Monochrome<br>Classics</h2>
-    <div class="copy" style="padding:0;max-width:34em">
+
+<section class="spread" id="new-batch" data-aisle="2">
+  <h2 class="title reveal">Logo Do’s<br>and Don’ts</h2>
+  <div class="copy reveal dd-intro">
+    <p>Our logo should be applied consistently across all brand communications to maintain a strong and recognizable visual identity. Following these guidelines ensures clarity, legibility, and a unified brand experience across every touchpoint.</p>
+  </div>
+  <div class="dd reveal" id="logo-dos">
+    <h3>Do’s</h3>
+    <div class="dd__stage" id="doStage"><i data-u8="wordmark"></i></div>
+    <p class="dd__name" id="doName"></p>
+    <div class="dd__grid" id="doGrid"></div>
+    <p class="hint">Tap a thumbnail to see each approved use.</p>
+    <div class="dd__copy">
       <p>The black and white logo variations provide versatility, clarity, and adaptability across a broader range of brand communications. They are used when the primary orange color is unsuitable, or when stronger contrast is required.</p>
       <p>Single-color variations offer a cost-effective and practical solution for applications with limited printing capabilities. Eliminate color inconsistencies caused by varying production methods.</p>
       <p>Black and white variations are preferred when contrast, simplicity, or production requirements take priority Can be used in image overlays, editorial layouts, and photographic advertisements, black-and-white documents, and receipts.</p>
     </div>
-    <div class="mono__stage" id="monoStage"><i data-u8="wordmark"></i></div>
-    <div class="mono__grid" id="monoGrid"></div>
-    <p class="hint" style="margin-top:8px">Tap a background to see the approved logo color for it.</p>
   </div>
-</section>
-
-<section class="spread" id="new-batch" data-aisle="2">
-  <div class="batch reveal">
-    <h2>New Batch<br>Logo</h2>
-    <p>Our logo should be applied consistently across all brand communications to maintain a strong and recognizable visual identity. Following these guidelines ensures clarity, legibility, and a unified brand experience across every touchpoint.</p>
-    <div class="tiles">
-      <div class="tile" style="color:var(--orange)"><span class="tick">✓</span><i data-u8="wordmark"></i></div>
-      <div class="tile tile--small" style="color:var(--orange)"><span class="tick">✓</span><i data-u8="wordmark"></i></div>
-      <div class="tile tile--pattern" style="color:var(--white)"><i data-u8="wordmark"></i></div>
-      <div class="tile" style="background:var(--orange);color:var(--white);border-color:var(--orange)"><i data-u8="wordmark"></i></div>
-      <div class="tile" style="background:var(--deep);color:var(--ink);border-color:var(--deep)"><i data-u8="wordmark"></i></div>
-      <div class="tile" style="background:var(--butter);color:var(--ink);border-color:var(--butter)"><i data-u8="wordmark"></i></div>
+  <div class="dd reveal" id="expired-logo">
+    <h3>Don’ts</h3>
+    <div class="dd__stage dd__stage--img" id="dontStage"><img id="dontImg" src="assets/img/book/donts/dont-1.png" alt=""></div>
+    <p class="dd__name" id="dontName"></p>
+    <div class="dd__grid" id="dontGrid"></div>
+    <p class="hint">Tap a thumbnail to see each incorrect use.</p>
+    <div class="dd__copy">
+      <p>Incorrect logo applications can weaken brand recognition, compromise legibility, and create visual inconsistencies. To protect the integrity of our identity, we avoid altering the logo’s proportions, colors, typography, or original design elements.</p>
     </div>
-  </div>
-  <div class="expired reveal" id="expired-logo">
-    <h2>Expired<br>Logo</h2>
-    <p>Incorrect logo applications can weaken brand recognition, compromise legibility, and create visual inconsistencies. To protect the integrity of our identity, we avoid altering the logo’s proportions, colors, typography, or original design elements.</p>
-    <img class="expired__img" src="assets/img/book/expired-logos.png" alt="Nine incorrect logo applications: recolored, rearranged, distorted, outlined and placed on busy patterns">
-    <div class="flip"><button class="btn btn--ghost" id="expiredFix">Show Fresh</button></div>
   </div>
 </section>
 
@@ -194,6 +189,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="assets/brand/svg/marks.js?v=3"></script>
 <script src="assets/brand/u8.js?v=3"></script>
-<script src="js/site.js?v=5"></script>
+<script src="js/site.js?v=6"></script>
 </body>
 </html>
