@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="u8-version" content="42">
-<script>/* always show the latest published version */(function(){var v='42';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
+<meta name="u8-version" content="43">
+<script>/* always show the latest published version */(function(){var v='43';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
 <title>Secondary — ULTIM8 Brand Guidelines</title>
 <meta name="description" content="ULTIM8 Brand Guidelines, Aisle 02: Primary Identity.">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://use.typekit.net/bsr5idk.css">
-<link rel="stylesheet" href="css/site.css?v=35">
+<link rel="stylesheet" href="css/site.css?v=36">
 </head>
 <body class="" data-page="02">
 <header class="nav" id="siteHeader">
@@ -24,7 +24,7 @@
     <li class="menu-item is-active">
       <a class="menu-item__link" href="aisle-02.html">Secondary</a>
       <button class="menu-item__toggle" aria-expanded="false" aria-label="Show Secondary topics"></button>
-      <div class="dropdown"><ul><li><a href="aisle-02.html#typography"><span>Typography</span></a></li><li><a href="aisle-02.html#pattern-mix"><span>Patterns</span></a></li><li><a href="aisle-02.html#icons-bites"><span>Icons</span></a></li><li><a href="aisle-02.html#layout-recipe"><span>Layouts</span></a></li></ul></div>
+      <div class="dropdown"><ul><li><a href="aisle-02.html#typography"><span>Typeface</span></a></li><li><a href="aisle-02.html#pattern-mix"><span>Patterns</span></a></li><li><a href="aisle-02.html#icons-bites"><span>Icons</span></a></li><li><a href="aisle-02.html#layout-recipe"><span>Layouts</span></a></li></ul></div>
     </li>
     <li class="menu-item">
       <a class="menu-item__link" href="aisle-03.html">Experiential</a>
@@ -41,8 +41,8 @@
 <div class="page-top" id="top" aria-hidden="true"></div>
 
 <section class="spread" id="typography" data-aisle="2">
-  <h2 class="title reveal">Typography<br>Family Pack</h2>
-  <div class="typetester reveal" style="grid-row:3">
+  <h2 class="title reveal">Typeface</h2>
+  <div class="copy reveal type-intro">
     <div class="copy" style="padding:0">
       <p class="label">Pacaembu Typeface</p>
       <p>Pacaembu is our contemporary sans-serif typeface, chosen for its clean, modern aesthetic that reflects ULTIM8’s visual identity. Its friendly and approachable letterforms complement our empathetic, welcoming, and customer-focused personality.</p>
@@ -55,79 +55,43 @@
     <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:600;font-size:22px">Sub Headline</div><small>Pacaembu Semibold</small></div>
     <div class="type-row"><div contenteditable="true" spellcheck="false" style="font-weight:300;font-size:18px">Body Copy</div><small>Pacaembu Light</small></div>
   </div>
+  <div class="tt reveal" id="typeTester">
+    <p class="label">Try the Typeface</p>
+    <label class="tt__input"><span>Type your own text</span><textarea id="ttText" rows="2" spellcheck="false">Less to Decide. More to Enjoy.</textarea></label>
+    <div class="tt__controls">
+      <div class="chips" id="ttWeights"><button class="chip" data-w="300">Light</button><button class="chip is-on" data-w="400">Regular</button><button class="chip" data-w="600">Semibold</button></div>
+      <div class="range-row"><span>Size</span><input type="range" id="ttSize" min="16" max="120" value="56" aria-label="Text size"><output id="ttSizeOut">56 px</output></div>
+    </div>
+    <div class="tt__preview" id="ttPreview"></div>
+    <p class="label" style="margin-top:24px">All Weights</p>
+    <div class="tt__all" id="ttAll"></div>
+    <p class="hint">Copy gives you the font, weight and size to use in your design file.</p>
+  </div>
 </section>
 
 <section class="spread" id="pattern-mix" data-aisle="3">
   <h2 class="title reveal">Patterns<br>Mix</h2>
-  <div class="copy reveal" style="grid-row:3">
+  <div class="copy reveal pm-copy">
     <p class="label">Pattern System</p>
-    <p>Our pattern system brings flexibility, personality, and consistency to ULTIM8’s visual identity. Each pattern serves a distinct purpose, helping us adapt our brand across different applications while maintaining a recognizable and cohesive look.</p>
-    <p>From everyday shopping bags to promotional campaigns, our patterns strengthen brand recognition, create visual interest, and support clear communication.</p>
-    <p class="label">Pattern Categories</p>
-    <p>1. <a href="#logo-pattern">Logo Pattern</a>: Strengthens brand recognition through repetition of our name.</p>
-    <p>2. <a href="#diamond-pattern">Daimond Pattern</a>: Extends our signature brand geometry into a recognizable visual texture.</p>
-    <p>3. <a href="#campaign-pattern">Campaign Pattern</a>: Introduces creative flexibility for specific campaigns while preserving brand consistency.</p>
+    <p>Our pattern system adds flexibility, personality, and consistency to ULTIM8’s visual identity. Across packaging, promotions, and everyday applications, three distinct patterns strengthen brand recognition and create visual interest.</p>
+    <ul class="pm-list">
+      <li><b>Logo Pattern:</b> Reinforces brand recognition through repetition, turning grocery bags, merchandise, and packaging into recognizable brand touchpoints.</li>
+      <li><b>Diamond Pattern:</b> Extends our signature geometry into a distinctive visual texture for brochures, presentations, in-store signage, and digital communications.</li>
+      <li><b>Campaign Pattern:</b> Allows creative flexibility while maintaining consistency across seasonal campaigns, promotional offers, social media, and special events.</li>
+    </ul>
   </div>
-  <div class="rules reveal" style="grid-row:3">
-    <p class="label">Pattern Rules</p>
-    <p>1. Brand name pattern: Use the approved wordmark artwork without altering its proportions or letterforms.</p>
-    <p>2. Diamond pattern: Preserve the approved diamond geometry and repeat structure.</p>
-    <p>3. Campaign patterns: Develop new variations using documented brand geometry, color, spacing, and repetition rules.</p>
-    <p>4. Hierarchy: Use one dominant pattern per composition rather than combining several competing patterns.</p>
-    <p>5. Legibility: Never allow decorative patterns to interfere with essential information.</p>
-    <p>6. Approval: New pattern families must be reviewed before becoming permanent brand assets.</p>
-  </div>
-</section>
-
-<section class="spread" id="logo-pattern" data-aisle="3">
-  <h2 class="title reveal">Patterns<br>Mix</h2>
-  <p class="pattern-sub reveal" style="grid-row:3">Logo Pattern</p>
-  <div class="pattern-copy reveal" style="grid-row:3">
-    <p>Our brand name pattern transforms the ULTIM8 wordmark into a recognizable visual element. Through repetition, it creates rhythm, reinforces our identity, and strengthens brand visibility across everyday applications.</p>
-    <p>Designed for high-visibility touchpoints, this pattern turns functional items such as grocery bags, merchandise, and packaging into opportunities for brand recognition beyond our store.</p>
-    <p><b>Usage Guide:</b></p>
-    <p>1. Use only our approved ULTIM8 wordmark.<br>2. Preserve the original typography, proportions, and spacing.<br>3. Maintain consistent repetition and alignment.<br>4. Use approved brand color combinations with sufficient contrast.<br>5. Adjust the overall pattern scale to suit the application without distorting individual wordmarks.<br>6. Avoid placing competing graphics or text over dense pattern areas.</p>
-  </div>
-  <div class="pattern-view reveal" style="grid-row:2 / span 2">
-    <div class="pattern-box pattern-box--logo" data-pattern="logo" data-min="140" data-max="420" data-val="220" data-unit="%"></div>
-    <div class="pattern-tools"><div class="range-row"><span>Scale</span><input type="range"><output></output></div></div>
-    <p class="hint">Scale adjusts the whole pattern uniformly — individual wordmarks are never distorted (Usage Guide 5).</p>
-  </div>
-</section>
-
-<section class="spread" id="diamond-pattern" data-aisle="3">
-  <h2 class="title reveal">Patterns<br>Mix</h2>
-  <p class="pattern-sub reveal" style="grid-row:3">Daimond Pattern</p>
-  <div class="pattern-copy reveal" style="grid-row:3">
-    <p>Our diamond pattern is inspired by the distinctive spark within the ULTIM8 logo, symbolizing intelligent guidance, clarity, and balance. By extending this familiar geometry into a repeating visual element, we create continuity between our logo and supporting brand communications.</p>
-    <p>The diamond pattern provides a recognizable background texture while maintaining the simplicity and visual clarity central to our shopping experience.</p>
-    <p>This pattern can be used for brochures, presentation layouts, in-store signage, digital communications, and supporting promotional graphics.</p>
-    <p><b>Usage Guide:</b></p>
-    <p>1. Preserve the approved diamond geometry and repeat structure.<br>2. Maintain consistent proportions, alignment, and spacing.<br>3. Use approved brand colors and background combinations.<br>4. Adjust scale and visual prominence according to the application.<br>5. Keep the pattern subtle when used behind important text or information.<br>6. Avoid distortion, overcrowding, or unapproved modifications.</p>
-  </div>
-  <div class="pattern-view pattern-overlay reveal" style="grid-row:2 / span 2" id="diamondView">
-    <div class="pattern-box pattern-box--diamond" data-pattern="diamond" data-min="120" data-max="700" data-val="300" data-unit="px"></div>
-    <div class="pattern-overlay__card"><b>Everyday Essentials, Made Easier.</b>Keep the pattern subtle when used behind important text or information.</div>
-    <div class="pattern-tools">
-      <div class="range-row"><span>Scale</span><input type="range"><output></output></div>
-      <button class="chip" id="diamondText">Behind Text</button>
+  <div class="pm reveal" id="patternSlider">
+    <div class="pm__view">
+      <div class="pm__track" id="pmTrack">
+        <div class="pm__slide" data-p="logo" aria-label="Logo Pattern"></div>
+        <div class="pm__slide" data-p="diamond" aria-label="Diamond Pattern"></div>
+        <div class="pm__slide" data-p="campaign" aria-label="Campaign Pattern"></div>
+      </div>
+      <button class="dd__arrow dd__arrow--prev" data-pm="-1" aria-label="Previous pattern"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button><button class="dd__arrow dd__arrow--next" data-pm="1" aria-label="Next pattern"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg></button>
     </div>
-  </div>
-</section>
-
-<section class="spread" id="campaign-pattern" data-aisle="3">
-  <h2 class="title reveal">Patterns<br>Mix</h2>
-  <p class="pattern-sub reveal" style="grid-row:3">Campaign Pattern</p>
-  <div class="pattern-copy reveal" style="grid-row:3">
-    <p>Our campaign patterns introduce variety and personality into ULTIM8’s visual communications. They allow us to explore new compositions for seasonal promotions, special events, and marketing campaigns while remaining connected to our established brand identity.</p>
-    <p>Unlike our permanent patterns, campaign patterns are flexible visual expressions developed for specific communication needs. They bring freshness to our designs without compromising brand recognition or clarity.</p>
-    <p>This can be used in seasonal campaigns, promotional offers, social media graphics, and special events.</p>
-    <p><b>Usage Guide:</b></p>
-    <p>1. Develop variations using our approved visual principles, geometry, and color palette.<br>2. Maintain a recognizable connection to the ULTIM8 identity.<br>3. Adapt the pattern’s scale, repetition, and composition to the campaign’s purpose.<br>4. Ensure patterns complement typography, imagery, and promotional messages.<br>5. Avoid introducing unrelated visual styles or excessive decorative details.<br>6. Review and approve new campaign patterns before use.</p>
-  </div>
-  <div class="pattern-view reveal" style="grid-row:2 / span 2">
-    <div class="pattern-box pattern-box--campaign" data-pattern="campaign" data-min="100" data-max="320" data-val="120" data-unit="%"></div>
-    <div class="pattern-tools"><div class="range-row"><span>Scale</span><input type="range"><output></output></div></div>
+    <div class="pm__bar"><p class="pm__name" id="pmName">Logo Pattern</p><div class="pm__dots" id="pmDots"><button aria-label="Logo Pattern"></button><button aria-label="Diamond Pattern"></button><button aria-label="Campaign Pattern"></button></div></div>
+    <p class="label" style="margin-top:18px">Color Options</p>
+    <div class="pm__colors" id="pmColors"></div>
   </div>
 </section>
 
@@ -183,13 +147,13 @@
       <p class="footer__tag">Less to Decide. More to Enjoy.</p>
       <a class="footer__dl" href="assets/ULTIM8-Brand-Assets.zip" download="ULTIM8-Brand-Assets.zip">Download brand assets</a>
     </div>
-    <div class="footer__cols"><div class="footer__col"><h4><a href="aisle-01.html">Primary</a></h4><ul><li><a href="aisle-01.html#signature-logo">Logo</a></li><li><a href="aisle-01.html#new-batch">Do’s and Don’ts</a></li><li><a href="aisle-01.html#logo-variety">Logo Variations</a></li><li><a href="aisle-01.html#tagline-logo">Brand Tagline</a></li><li><a href="aisle-01.html#color-palette">Color Palette</a></li></ul></div><div class="footer__col"><h4><a href="aisle-02.html">Secondary</a></h4><ul><li><a href="aisle-02.html#typography">Typography</a></li><li><a href="aisle-02.html#pattern-mix">Patterns</a></li><li><a href="aisle-02.html#icons-bites">Icons</a></li><li><a href="aisle-02.html#layout-recipe">Layouts</a></li></ul></div><div class="footer__col"><h4><a href="aisle-03.html">Experiential</a></h4><ul><li><a href="aisle-03.html#brand-look">Brand Look</a></li><li><a href="aisle-03.html#ai-toolkit">AI Tool Kit</a></li><li><a href="aisle-03.html#permanent-staples">AI Prompts</a></li></ul></div><div class="footer__col"><h4><a href="kiosk/index.html" target="_blank">AI Kiosk</a></h4></div></div>
+    <div class="footer__cols"><div class="footer__col"><h4><a href="aisle-01.html">Primary</a></h4><ul><li><a href="aisle-01.html#signature-logo">Logo</a></li><li><a href="aisle-01.html#new-batch">Do’s and Don’ts</a></li><li><a href="aisle-01.html#logo-variety">Logo Variations</a></li><li><a href="aisle-01.html#tagline-logo">Brand Tagline</a></li><li><a href="aisle-01.html#color-palette">Color Palette</a></li></ul></div><div class="footer__col"><h4><a href="aisle-02.html">Secondary</a></h4><ul><li><a href="aisle-02.html#typography">Typeface</a></li><li><a href="aisle-02.html#pattern-mix">Patterns</a></li><li><a href="aisle-02.html#icons-bites">Icons</a></li><li><a href="aisle-02.html#layout-recipe">Layouts</a></li></ul></div><div class="footer__col"><h4><a href="aisle-03.html">Experiential</a></h4><ul><li><a href="aisle-03.html#brand-look">Brand Look</a></li><li><a href="aisle-03.html#ai-toolkit">AI Tool Kit</a></li><li><a href="aisle-03.html#permanent-staples">AI Prompts</a></li></ul></div><div class="footer__col"><h4><a href="kiosk/index.html" target="_blank">AI Kiosk</a></h4></div></div>
   </div>
   <div class="footer__bottom"><span>© 2026 ULTIM8 Market · Brand Guidelines</span><a href="#top">Back to top</a></div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="assets/brand/svg/marks.js?v=3"></script>
 <script src="assets/brand/u8.js?v=3"></script>
-<script src="js/site.js?v=12"></script>
+<script src="js/site.js?v=14"></script>
 </body>
 </html>

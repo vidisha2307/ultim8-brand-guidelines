@@ -382,6 +382,57 @@
   });
   when('#diamondText', () => $('#diamondText').addEventListener('click', e => { const on = $('#diamondView').classList.toggle('is-text'); e.target.classList.toggle('is-on', on); }));
 
+  /* TYPEFACE TESTER: type your own text and see every Pacaembu weight */
+  when('#typeTester', () => {
+    const W = { 300: 'Light', 400: 'Regular', 600: 'Semibold' };
+    const txt = $('#ttText'), size = $('#ttSize'), prev = $('#ttPreview'), all = $('#ttAll');
+    let w = 400;
+    const esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    function draw() {
+      const t = esc(txt.value || 'Less to Decide. More to Enjoy.'), px = +size.value;
+      $('#ttSizeOut').textContent = px + ' px';
+      prev.style.fontWeight = w; prev.style.fontSize = px + 'px'; prev.innerHTML = t;
+      all.innerHTML = Object.entries(W).map(([k, n]) => `<div class="tt__row ${+k === w ? 'is-on' : ''}"><div class="tt__sample" style="font-weight:${k}">${t}</div><div class="tt__meta"><span>Pacaembu ${n} · ${k}</span><button class="copy-btn" data-copy-font="Pacaembu ${n}, ${px} px">Copy</button></div></div>`).join('');
+    }
+    $$('#ttWeights .chip').forEach(b => b.addEventListener('click', () => { w = +b.dataset.w; $$('#ttWeights .chip').forEach(x => x.classList.toggle('is-on', x === b)); draw(); }));
+    txt.addEventListener('input', draw); size.addEventListener('input', draw);
+    all.addEventListener('click', e => { const b = e.target.closest('[data-copy-font]'); if (!b) return; navigator.clipboard?.writeText(b.dataset.copyFont).catch(() => {}); toast(`Copied “${b.dataset.copyFont}”`); });
+    draw();
+  });
+
+  /* PATTERNS MIX: one slider for all three patterns, with brand color options */
+  when('#patternSlider', () => {
+    const NAMES = { logo: 'Logo Pattern', diamond: 'Diamond Pattern', campaign: 'Campaign Pattern' };
+    const SIZE = { logo: 'center / 220% auto no-repeat', diamond: '0 0 / 260px auto repeat', campaign: 'center / 120% auto no-repeat' };
+    const COLORS = [
+      ['Ultim8 Orange + White', '#F26522', '#FFFFFF'], ['White + Ultim8 Orange', '#FFFFFF', '#F26522'],
+      ['Deep Orange + Peach', '#CB3727', '#FDD3BB'], ['Buttercream + Ultim8 Orange', '#FFF2D5', '#F26522'], ['Peach + Deep Orange', '#FDD3BB', '#CB3727']
+    ];
+    const slides = $$('.pm__slide'), dots = $$('#pmDots button'), svg = {};
+    let cur = 0, col = 0;
+    $('#pmColors').innerHTML = COLORS.map(([n, bg, fg], i) => `<button class="pm__swatch ${i ? '' : 'is-on'}" data-c="${i}" aria-label="${n}" title="${n}"><i style="background:${bg}"></i><i style="background:${fg}"></i><span>${n}</span></button>`).join('');
+    async function paint() {
+      const [, bg, fg] = COLORS[col];
+      await Promise.all(slides.map(async el => {
+        const p = el.dataset.p;
+        if (!svg[p]) svg[p] = await fetch(`assets/brand/svg/pattern-${p}.svg`).then(r => r.text());
+        /* diamond: orange ground with white shapes; logo + campaign: orange shapes on a clear ground */
+        const s = p === 'diamond' ? svg[p].replace(/#F26522/gi, '__BG__').replace(/#FFFFFF/gi, fg).replace(/__BG__/g, bg) : svg[p].replace(/#F26522/gi, fg);
+        el.style.background = `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(s)}") ${SIZE[p]} ${bg}`;
+      }));
+    }
+    function go(i) {
+      cur = (i + slides.length) % slides.length;
+      $('#pmTrack').style.transform = `translateX(${-cur * 100}%)`;
+      $('#pmName').textContent = NAMES[slides[cur].dataset.p];
+      dots.forEach((d, j) => d.classList.toggle('is-on', j === cur));
+    }
+    $$('[data-pm]').forEach(b => b.addEventListener('click', () => go(cur + +b.dataset.pm)));
+    dots.forEach((d, j) => d.addEventListener('click', () => go(j)));
+    $$('.pm__swatch').forEach(b => b.addEventListener('click', () => { col = +b.dataset.c; $$('.pm__swatch').forEach(x => x.classList.toggle('is-on', x === b)); paint(); }));
+    paint(); go(0);
+  });
+
   when('#iconGrid', () => {
     const ICONS = [
       ['i10', 'Search', 'Find a product, search an aisle or a service.'],
