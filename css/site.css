@@ -734,3 +734,9 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 /* Homepage Vision / Mission / Purpose / Value boxes: peach, grey on hover */
 .purpose--home article { background: var(--peach); }
 .purpose--home article:hover { background: var(--grey); }
+
+/* Homepage: Vision / Mission / Purpose / Value in their own parallax section on the logo pattern */
+.purpose-band { padding: 120px var(--m); background: url(../assets/img/photos/logo-pattern.jpg) center / 720px auto repeat var(--white); background-attachment: fixed; }
+.purpose-band .purpose--home { margin-top: 0; }
+.purpose--home article { aspect-ratio: 3 / 4; min-height: 380px; display: flex; flex-direction: column; }
+@media (max-width: 640px) { .purpose--home article { aspect-ratio: auto; min-height: 320px; } }
