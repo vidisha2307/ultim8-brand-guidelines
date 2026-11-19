@@ -1097,3 +1097,6 @@ body[data-page="02"] .spread p, body[data-page="02"] .spread li { text-align: le
 #icons-bites .icon-grid { grid-column: 7 / -1; grid-row: 3 !important; grid-template-columns: repeat(4, 1fr); width: 100%; gap: 14px; justify-content: stretch; }
 #icons-bites .icon-grid button { width: auto; height: auto; aspect-ratio: 1; }
 @media (max-width: 860px) { #icons-bites .icon-construct, #icons-bites .icon-grid, #icons-bites .copy { grid-column: 1 / -1; grid-row: auto !important; } }
+/* Icons: the 4 tiles in each row span exactly the width of the structure box */
+#icons-bites .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+#icons-bites .icon-grid button { width: 100% !important; height: auto !important; min-width: 0; padding: 18%; }
