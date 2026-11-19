@@ -822,3 +822,11 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
   #signature-logo .title, #signature-logo .copy, #signature-logo .logo-main, #signature-logo .room { grid-column: 1 / -1; grid-row: auto; }
   #signature-logo .logo-main { margin: 8px 0 32px; }
 }
+
+/* Primary Logo + Logo Room combined: the main logo shows its clear space (X = half the height of the 8) with a size slider */
+#signature-logo .logo-main .room__stage { border: 0; background: none; min-height: 380px; overflow: visible; }
+#signature-logo .logo-main .room__stage.is-tight { box-shadow: none; }
+#signature-logo .logo-main .room__stage.is-tight .room__box { outline: 2px solid var(--orange); }
+#signature-logo .logo-main .room__controls { max-width: 420px; margin: 16px auto 0; }
+#signature-logo .logo-main .room__warn { max-width: 420px; margin: 12px auto 0; }
+#signature-logo .logo-main { grid-column: 7 / -1; }
