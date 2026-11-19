@@ -1117,3 +1117,17 @@ body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page=
 .copy-link { display: inline-block; margin-top: 4px; padding: 0; border: 0; background: none; font: inherit; font-size: 14px; font-weight: 600; color: var(--orange); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .copy-link:hover { color: var(--deep); }
 @media (max-width: 860px) { #permanent-staples .ai-check-copy, #permanent-staples .checklist { grid-column: 1 / -1; grid-row: auto; } }
+
+/* Icons: white text; every icon the same height; right side scaled to the height of the left text */
+#icons-bites .title, #icons-bites .copy, #icons-bites .copy p { color: var(--white); }
+#icons-bites .icon-grid button .u8 { height: 100%; width: auto; max-width: 100%; }
+#icons-bites .icon-construct { width: var(--iw, 100%) !important; justify-self: end !important; }
+#icons-bites .icon-construct img { width: 100%; height: auto; }
+#icons-bites .icon-grid { width: var(--iw, 100%) !important; justify-self: end !important; }
+#icons-bites .icon-grid button { display: flex !important; align-items: center; justify-content: center; padding: 0 !important; }
+#icons-bites .icon-grid button .u8 { height: var(--ih, 55%) !important; width: auto !important; max-width: 80%; }
+/* Icons: right side a little smaller; all 8 boxes identical squares */
+#icons-bites { --iw: 85%; }
+#icons-bites .icon-grid button { aspect-ratio: 1 / 1 !important; height: auto !important; overflow: hidden; }
+@media (max-width: 860px) { #icons-bites { --iw: 100%; } }
+#icons-bites .icon-construct img { width: auto !important; height: 220px !important; max-width: 100%; margin: 0 auto; display: block; }

@@ -423,6 +423,13 @@
     paint(); go(0);
   });
 
+  /* ICONS: every icon gets the same height inside its (identical, square) box */
+  when('#icons-bites .icon-grid', () => {
+    const sec = $('#icons-bites'), grid = $('#icons-bites .icon-grid');
+    const fit = () => { const tile = grid.querySelector('button')?.getBoundingClientRect().width || 0; if (tile) sec.style.setProperty('--ih', Math.round(tile * 0.5) + 'px'); };
+    addEventListener('resize', fit); addEventListener('load', fit); fit();
+  });
+
   when('#iconGrid', () => {
     const ICONS = [
       ['i10', 'Search', 'Find a product, search an aisle or a service.'],
