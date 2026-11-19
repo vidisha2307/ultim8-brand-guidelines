@@ -1087,3 +1087,13 @@ body[data-page="02"] .spread p, body[data-page="02"] .spread li { text-align: le
 #icons-bites .icon-grid button { width: var(--tile, auto); height: var(--tile, auto); padding: 20%; box-sizing: border-box; }
 #icons-bites .icon-grid { grid-template-columns: repeat(var(--cols, 4), var(--tile, 1fr)); }
 #icons-bites .icon-construct { margin-bottom: 20px; }
+
+/* Icons: structure diagram on top (same width as the 4 columns), caption under it, 8 icons in 2 rows × 4 below */
+#icons-bites .title { grid-row: 1 !important; margin-bottom: 20px; }
+#icons-bites .copy { grid-row: 2 / span 2 !important; align-self: start; }
+#icons-bites .icon-construct { grid-column: 7 / -1; grid-row: 1 / span 2 !important; justify-self: stretch; width: 100%; max-width: none; display: block; padding: 18px; margin-bottom: 16px; }
+#icons-bites .icon-construct img { height: 240px; width: auto; max-width: 100%; margin: 0 auto; }
+#icons-bites .fig-tag { max-width: none; margin: 10px 0 0; text-align: left; }
+#icons-bites .icon-grid { grid-column: 7 / -1; grid-row: 3 !important; grid-template-columns: repeat(4, 1fr); width: 100%; gap: 14px; justify-content: stretch; }
+#icons-bites .icon-grid button { width: auto; height: auto; aspect-ratio: 1; }
+@media (max-width: 860px) { #icons-bites .icon-construct, #icons-bites .icon-grid, #icons-bites .copy { grid-column: 1 / -1; grid-row: auto !important; } }

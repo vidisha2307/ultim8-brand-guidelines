@@ -389,24 +389,6 @@
     r.addEventListener('input', () => { txt.style.fontSize = r.value + 'px'; out.textContent = r.value + ' px'; });
   }));
 
-  /* ICONS: the icon group is sized to match the height of the text beside it, inside the margins */
-  when('#icons-bites .icon-grid', () => {
-    const grid = $('#icons-bites .icon-grid'), copy = $('#icons-bites .copy');
-    const fit = () => {
-      if (innerWidth <= 860) { grid.style.removeProperty('--tile'); return; }
-      const gap = 14, h = copy.offsetHeight, w = grid.getBoundingClientRect().width, n = grid.children.length;
-      /* pick the column count whose grid height comes closest to the text height, without leaving the margins */
-      let best = null;
-      [4, 3, 2].forEach(c => {
-        const rows = Math.ceil(n / c), t = Math.floor(Math.min((h - gap * (rows - 1)) / rows, (w - gap * (c - 1)) / c));
-        const diff = Math.abs(rows * t + gap * (rows - 1) - h);
-        if (!best || diff < best.diff) best = { c, t, diff };
-      });
-      grid.style.setProperty('--cols', best.c);
-      grid.style.setProperty('--tile', Math.max(48, best.t) + 'px');
-    };
-    addEventListener('resize', fit); addEventListener('load', fit); document.fonts?.ready.then(fit); fit();
-  });
 
   /* PATTERNS MIX: one slider for all three patterns, with brand color options */
   when('#patternSlider', () => {
