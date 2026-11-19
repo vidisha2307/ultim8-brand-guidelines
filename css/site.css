@@ -986,3 +986,12 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 #swatches > div:nth-child(1) { grid-column: 1; grid-row: 1; }
 #swatches > div:nth-child(3) { grid-column: 2; grid-row: 1; }
 #swatches > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+
+/* No widows: balanced headings, neat rag on body text */
+h1, h2, h3, h4, .title { text-wrap: balance; }
+p, li, figcaption, blockquote, .hint { text-wrap: pretty; }
+/* Color Palette swatches: every circle on one straight column grid */
+#swatches { grid-template-columns: 168px 1fr; column-gap: 12px; }
+#swatches .swatch-row { flex-wrap: nowrap; align-items: flex-start; }
+#swatches .swatch { flex: 0 0 78px; width: 78px; }
+#swatches .swatch i { margin-left: 4px; margin-right: 4px; }

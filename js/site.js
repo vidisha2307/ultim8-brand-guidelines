@@ -13,6 +13,14 @@
     if (s.dataset.pages) { const [a, b] = s.dataset.pages.split('|'); s.insertAdjacentHTML('beforeend', `<div class="folio" aria-hidden="true"><b>${a}</b><span></span><span></span><b>${b}</b></div>`); }
   });
   u8.hydrate();
+  /* no widows: keep the last two words of every text block together (fallback for browsers without text-wrap: pretty) */
+  const noWidow = root => $$('p, li, h1, h2, h3, h4, figcaption, blockquote, .hint, .dd__name, .lv__name, .mood__intro', root).forEach(el => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last = null, n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim()) last = n;
+    if (!last || el.textContent.trim().split(/\s+/).length < 4) return;
+    last.nodeValue = last.nodeValue.replace(/\s+(\S+)\s*$/, ' $1');
+  });
+  noWidow(document);
   /* land on the subtopic picked in a dropdown, after the page has been decorated */
   if (location.hash) {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
