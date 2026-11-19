@@ -507,7 +507,19 @@
   when('#brand-look', () => {
     const sec = $('#brand-look'), frame = $('.look__frame', sec), imgs = $$('.look__img', sec), caps = $$('.look__cap', sec), dots = $$('.look__dots i', sec), n = imgs.length;
     let cur = 0, acc = 0, lock = 0;
-    const show = i => { cur = Math.max(0, Math.min(n - 1, i)); [imgs, caps, dots].forEach(list => list.forEach((el, k) => el.classList.toggle('is-on', k === cur))); };
+    /* the box takes the shape of the current photo (within the page width and a comfortable height) */
+    const size = () => {
+      const img = imgs[cur]; if (!img || !img.naturalWidth) return;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      const maxW = Math.min(1100, frame.parentElement.clientWidth - 2), maxH = Math.min(innerHeight * 0.68, 620);
+      let w = maxW, h = w / ratio;
+      if (h > maxH) { h = maxH; w = h * ratio; }
+      frame.style.width = Math.round(w) + 'px'; frame.style.height = Math.round(h) + 'px';
+    };
+    const show = i => { cur = Math.max(0, Math.min(n - 1, i)); [imgs, caps, dots].forEach(list => list.forEach((el, k) => el.classList.toggle('is-on', k === cur))); size(); };
+    imgs.forEach(img => img.addEventListener('load', () => { if (img === imgs[cur]) size(); }));
+    addEventListener('resize', size);
+    imgs.forEach(img => { if (img.loading === 'lazy') img.loading = 'eager'; });
     frame.addEventListener('wheel', e => {
       const d = e.deltaY;
       /* past the first / last image, let the page scroll on */

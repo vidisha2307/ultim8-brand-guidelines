@@ -1141,3 +1141,6 @@ body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page=
 #brand-look .look__frame { flex: none; width: min(1100px, 100%); height: min(68vh, 620px); max-height: none; background: var(--white); border: 1px solid var(--grey); box-sizing: border-box; cursor: ns-resize; }
 #brand-look .look__img { object-fit: contain; transform: none; }
 #brand-look .look__img.is-on { transform: none; }
+/* Brand Look: the box resizes smoothly to each photo's shape */
+#brand-look .look__frame { transition: width .45s ease, height .45s ease; max-width: 100%; }
+#brand-look .look__img { object-fit: cover; }
