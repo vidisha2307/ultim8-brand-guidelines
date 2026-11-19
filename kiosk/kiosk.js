@@ -223,10 +223,11 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
 
     recipes: () => {
       const tabs = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Vegetarian'];
-      const list = RECIPES.filter(r => S.recTab === 'All' || r.tags.includes(S.recTab));
-      return `<div class="page">${pageHead('Quick &amp; Easy Recipes', 'Shop ingredients for your favorite meals.')}
+      const q = (S.recQ || '').trim().toLowerCase();
+      const list = RECIPES.filter(r => (S.recTab === 'All' || r.tags.includes(S.recTab)) && (!q || r.name.toLowerCase().includes(q)));
+      return `<div class="page">${pageHead('Quick &amp; Easy Recipes', 'Shop ingredients for your favorite meals.', searchBox('recipeSearch', 'Search recipes by name...', S.recQ || ''))}
         <div class="tabs">${tabs.map(t => `<button class="${t === S.recTab ? 'on' : ''}" data-rtab="${t}">${t}</button>`).join('')}</div>
-        <div class="grid">${list.map(recipeCard).join('')}</div></div>`;
+        ${list.length ? `<div class="grid">${list.map(recipeCard).join('')}</div>` : `<div class="empty"><div><h3>No recipes match “${S.recQ}”.</h3><p>Try a simpler word like “pasta” or “tacos”.</p><div class="acts"><button class="kb kb--ghost" data-clear="recipeSearch">Clear Search</button></div></div></div>`}</div>`;
     },
 
     recipe: () => {
@@ -335,7 +336,7 @@ function noWidow(root) {
   }
   function back() { const prev = S.history.pop() || 'home'; go(prev, { back: true }); }
   function restart() {
-    Object.assign(S, { cart: {}, list: [], compare: ['milk-2', 'milk-whole', 'milk-oat'], cmpStart: 0, cmpPick: null, cmpWhy: null, history: [], find: { cat: 'produce', sub: 'All', q: '' }, recTab: 'All', ordTab: 'All Orders', ordQ: '', serves: 4, recipeOff: {}, method: null, openOrder: null });
+    Object.assign(S, { cart: {}, list: [], compare: ['milk-2', 'milk-whole', 'milk-oat'], cmpStart: 0, cmpPick: null, cmpWhy: null, history: [], find: { cat: 'produce', sub: 'All', q: '' }, recTab: 'All', recQ: '', ordTab: 'All Orders', ordQ: '', serves: 4, recipeOff: {}, method: null, openOrder: null });
     $('#cartCount').textContent = 0; closePrint(); S.screen = ''; go('home');
   }
 
@@ -410,7 +411,7 @@ function noWidow(root) {
     if (d.detail) return productSheet(d.detail);
     if (d.cat) { S.find = { cat: d.cat, sub: 'All', q: '' }; if (S.screen === 'orders') return go('find'); return render(true); }
     if (d.sub) { S.find.sub = d.sub; return render(true); }
-    if (d.clear) { if (d.clear === 'orderSearch') S.ordQ = ''; else S.find.q = ''; return render(true); }
+    if (d.clear) { if (d.clear === 'orderSearch') S.ordQ = ''; else if (d.clear === 'recipeSearch') S.recQ = ''; else S.find.q = ''; return render(true); }
     if (d.listadd) { const c = CATS.find(c => c.id === d.listadd); addList({ name: c.name, qty: '', aisle: c.aisle }); toast(`${c.name} added to your shopping list`, "View List", () => go("cart")); return render(true); }
     if (d.map) return openSheet(`<div class="pd__where"><h2 style="font-weight:400;font-size:52px;margin:0 0 10px">Aisle ${d.map}: ${AISLES[d.map - 1]}</h2><p style="font-size:24px;color:var(--soft);margin:0 0 26px">Walk past the produce tables and look for the orange aisle sign.</p>${mapHtml(+d.map)}</div>`);
     // recipes
@@ -453,6 +454,7 @@ function noWidow(root) {
   screenEl.addEventListener('input', e => {
     const id = e.target.id;
     if (id === 'findSearch' || id === 'homeSearch') { S.find.q = e.target.value; const box = $(id === 'homeSearch' ? '#homeResults' : '#findResults'); box.innerHTML = findResults(id === 'homeSearch' ? 6 : 4); u8.hydrate(box); $('.section-h h2', view) && ($('.section-h h2', view).textContent = S.find.q ? 'Search results' : CATS.find(c => c.id === S.find.cat).name); }
+    if (id === 'recipeSearch') { S.recQ = e.target.value; const pos = e.target.selectionStart; render(true); const inp = $('#recipeSearch'); inp.focus(); inp.setSelectionRange(pos, pos); }
     if (id === 'orderSearch') { S.ordQ = e.target.value; const v = e.target.value, pos = e.target.selectionStart; render(true); const inp = $('#orderSearch'); inp.focus(); inp.setSelectionRange(pos, pos); }
   });
 
