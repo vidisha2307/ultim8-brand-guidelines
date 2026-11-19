@@ -836,3 +836,6 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 #signature-logo .logo-main .room__stage.is-tight { border-color: var(--orange); }
 #signature-logo .room__guide { display: none; }
 #signature-logo .room__x { background: none; box-shadow: inset 0 0 0 1.5px var(--grey); color: #9a9a9a; }
+
+/* Website sections: no book page numbers, orange folio line or aisle labels */
+.runner, .folio { display: none; }
