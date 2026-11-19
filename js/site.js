@@ -140,6 +140,7 @@
       'Don’t use an outline-only logo', 'Don’t use low-contrast colors', 'Don’t place it on busy patterns'
     ];
     const doStage = $('#doStage'), doGrid = $('#doGrid'), dontImg = $('#dontImg'), dontGrid = $('#dontGrid');
+    const cur = { do: 0, dont: 0 };
     const paint = (el, d) => {
       el.style.background = d.bg;
       el.style.boxShadow = d.bg === 'var(--white)' ? 'inset 0 0 0 1px var(--grey)' : 'none';
@@ -153,7 +154,8 @@
     function setDo(i) {
       const d = DOS[i];
       doStage.className = 'dd__stage ' + (d.cls || '') + (d.small ? ' is-small' : '');
-      paint(doStage, d); doStage.querySelector('svg').style.color = d.logo;
+      paint(doStage, d); doStage.style.boxShadow = 'none'; doStage.querySelector('svg').style.color = d.logo;
+      cur.do = i;
       $('#doName').textContent = d.name;
       $$('button', doGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
     }
@@ -164,9 +166,15 @@
     });
     function setDont(i) {
       dontImg.src = `assets/img/book/donts/dont-${i + 1}.png`; dontImg.alt = DONTS[i];
+      cur.dont = i;
       $('#dontName').textContent = DONTS[i];
       $$('button', dontGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
     }
+    /* slider arrows: step left / right through each container */
+    $$('.dd__arrow').forEach(a => a.addEventListener('click', () => {
+      const k = a.dataset.dd, n = k === 'do' ? DOS.length : DONTS.length, i = (cur[k] + +a.dataset.step + n) % n;
+      (k === 'do' ? setDo : setDont)(i);
+    }));
     setDo(0); setDont(0);
   });
 
