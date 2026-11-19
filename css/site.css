@@ -974,3 +974,9 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 #color-palette .palette { grid-row: 1 !important; align-self: start; }
 #tagline-logo::before { opacity: .07; }
 @media (max-width: 1180px) { #color-palette .palette { grid-row: auto !important; } }
+
+/* Brand Tagline: height fits its content */
+#tagline-logo { min-height: 0; padding-bottom: 72px; }
+/* Don'ts thumbnails: white background with Neutral Gray border */
+#dontGrid button { background-color: var(--white); border: 1px solid var(--grey); }
+#dontGrid button.is-on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
