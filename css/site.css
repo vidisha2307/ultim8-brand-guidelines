@@ -770,3 +770,9 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
   .offer__mark { order: 0; margin: 12px 0; }
 }
 .offer__mark .stage8 { aspect-ratio: 232 / 320; width: auto; flex: none; }
+
+/* Homepage store photo: full image, never cropped */
+.offer__photo img { height: auto; object-fit: initial; }
+/* Footer: brand assets as a text link */
+.footer__dl { color: var(--white); font-weight: 600; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
+.footer__dl:hover { opacity: .8; }
