@@ -1131,3 +1131,6 @@ body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page=
 #icons-bites .icon-grid button { aspect-ratio: 1 / 1 !important; height: auto !important; overflow: hidden; }
 @media (max-width: 860px) { #icons-bites { --iw: 100%; } }
 #icons-bites .icon-construct img { width: auto !important; height: 220px !important; max-width: 100%; margin: 0 auto; display: block; }
+
+/* Brand Look slider sits closer to the header */
+#brand-look .look__sticky { justify-content: flex-start; padding-top: calc(var(--nav) + 32px); }
