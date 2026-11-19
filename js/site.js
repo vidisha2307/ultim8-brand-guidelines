@@ -279,19 +279,12 @@
   });
 
   /* ================= AISLE 04 ================= */
-  /* the four kiosk functions: drive the embedded kiosk, or open the AI Kiosk page at that screen */
-  const frame = $('#kioskFrame');
-  const kioskGo = screen => frame?.contentWindow?.postMessage({ u8kiosk: screen }, '*');
-  $$('[data-kiosk]').forEach(b => b.addEventListener('click', () => {
-    if (!frame) { location.href = 'ai-kiosk.html#kiosk-' + b.dataset.kiosk; return; }
-    $('#kioskStage').scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => kioskGo(b.dataset.kiosk), 500);
-  }));
-  when('#kioskRestart', () => $('#kioskRestart').addEventListener('click', () => kioskGo('restart')));
-  if (frame && /^#kiosk-/.test(location.hash)) {
-    const screen = location.hash.slice(7);
-    setTimeout(() => $('#kioskStage').scrollIntoView({ behavior: 'instant', block: 'center' }), 0);
-    frame.addEventListener('load', () => setTimeout(() => kioskGo(screen), 300), { once: true });
-  }
+  when('#kioskFrame', () => {
+    const frame = $('#kioskFrame');
+    const kioskGo = screen => frame.contentWindow?.postMessage({ u8kiosk: screen }, '*');
+    $$('[data-kiosk]').forEach(b => b.addEventListener('click', () => { $('#kiosk').scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => kioskGo(b.dataset.kiosk), 500); }));
+    $('#kioskRestart').addEventListener('click', () => kioskGo('restart'));
+  });
   when('#notes', () => $$('#notes .note').forEach(n => n.addEventListener('click', () => $$('#notes .note').forEach(x => x.classList.toggle('is-on', x === n)))));
   when('#scentPhoto', () => {
     const dimL = $('#scentDimL'), dimR = $('#scentDimR');
