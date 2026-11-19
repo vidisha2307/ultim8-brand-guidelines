@@ -213,6 +213,38 @@
     });
   });
 
+  /* ALL LOGO VARIATIONS: the original logo's own pieces move into each variation
+     Primary Logo → Logo Type → Stacked Logo → Logo Mark → Tagline Logo */
+  when('#logoMorph', () => {
+    const box = $('#logoMorph'), parts = {}; $$('.lv__p', box).forEach(g => parts[g.dataset.p] = g);
+    const ring = $('.lv__ring', box), name = $('#lvName'), steps = $('#lvSteps');
+    const row2 = [-239.4, 121.7];
+    /* each state: global fit (k, ox, oy) + per-piece local move [scale, tx, ty, opacity] */
+    const STATES = [
+      { name: 'Primary Logo', g: [1.15, -31.2, 3.0], p: { U: [1, 0, 0, 1], L: [1, 0, 0, 1], T: [1, 0, 0, 1], I: [1, 0, 0, 1], M: [1, 0, 0, 1], P8: [1, 0, 0, 0], D8: [1, 0, 0, 1] } },
+      { name: 'Logo Type', g: [1.15, -31.2, 3.0], p: { U: [1, 0, 0, 1], L: [1, 0, 0, 1], T: [1, 0, 0, 1], I: [1, 0, 0, 1], M: [1, 0, 0, 1], P8: [1, 0, 0, 1], D8: [1, 0, 0, 0] } },
+      { name: 'Stacked Logo', g: [0.68, 185.6, 103.8], p: { U: [1, 0, 0, 1], L: [1, 0, 0, 1], T: [1, 0, 0, 1], I: [1, ...row2, 1], M: [1, ...row2, 1], P8: [1, ...row2, 1], D8: [1.868, -736.9, -296.2, 1] } },
+      { name: 'Logo Mark', g: [2.6, -958.1, -207.5], p: { U: [1, 0, 0, 0], L: [1, 0, 0, 0], T: [1, 0, 0, 0], I: [1, 0, 0, 0], M: [1, 0, 0, 0], P8: [1, 0, 0, 0], D8: [1, 0, 0, 1] } },
+      { name: 'Tagline Logo', g: [1.418, -382.2, -35.9], ring: true, p: { U: [1, 0, 0, 0], L: [1, 0, 0, 0], T: [1, 0, 0, 0], I: [1, 0, 0, 0], M: [1, 0, 0, 0], P8: [1, 0, 0, 0], D8: [1, 0, 0, 1] } }
+    ];
+    steps.innerHTML = STATES.map((st, i) => `<button data-i="${i}">${st.name}</button>`).join('');
+    let cur = 0, timer = null;
+    function show(i) {
+      cur = (i + STATES.length) % STATES.length; const st = STATES[cur], [k, ox, oy] = st.g;
+      Object.entries(st.p).forEach(([key, [a, tx, ty, op]]) => {
+        const el = parts[key]; if (!el) return;
+        el.style.transform = `translate(${ox + k * tx}px, ${oy + k * ty}px) scale(${k * a})`;
+        el.style.opacity = op;
+      });
+      ring.style.opacity = st.ring ? 1 : 0;
+      name.textContent = st.name;
+      $$('button', steps).forEach((b, j) => b.classList.toggle('is-on', j === cur));
+    }
+    const play = () => { clearInterval(timer); timer = setInterval(() => { if (!box.matches(':hover')) show(cur + 1); }, 2400); };
+    $$('button', steps).forEach(b => b.addEventListener('click', () => { show(+b.dataset.i); play(); }));
+    show(0); play();
+  });
+
   /* LOGO MARK SLIDER: the 8 transforms through every approved service variation */
   when('#slider8', () => {
     const setStage = makeStage($('#stage8'), KEYS);

@@ -893,3 +893,17 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 /* Logo Variations: Icon + wider Environmental graphic (receipt removed) */
 #logo-variety .apply { grid-template-columns: 1fr 2fr; }
 #logo-variety .aisle-sign { width: 100%; box-sizing: border-box; justify-content: center; padding: 18px 24px; }
+
+/* Logo Variations: morphing container — the original logo moves through every variation */
+.lv__label { margin-top: 32px; }
+.lv { border: 1px solid var(--grey); border-radius: 16px; background: var(--white); padding: 20px; }
+.lv__svg { display: block; width: 100%; height: auto; overflow: hidden; }
+.lv__p { fill: var(--orange); transform-origin: 0 0; transition: transform .9s cubic-bezier(.65,0,.35,1), opacity .5s ease; }
+.lv__ring { opacity: 0; transition: opacity .6s ease .3s; fill: var(--ink); }
+.lv__tag { font-family: var(--font); font-weight: 300; font-size: 31.57px; letter-spacing: 3.16px; }
+.lv__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.lv__name { margin: 0; font-weight: 600; font-size: 16px; }
+.lv__steps { display: flex; flex-wrap: wrap; gap: 6px; }
+.lv__steps button { border: 0; background: none; padding: 4px 6px; font: inherit; font-size: 12px; color: #8a8a8a; cursor: pointer; border-bottom: 2px solid transparent; }
+.lv__steps button.is-on { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .lv__p, .lv__ring { transition: none; } }
