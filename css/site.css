@@ -740,3 +740,6 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .purpose-band .purpose--home { margin-top: 0; }
 .purpose--home article { aspect-ratio: 3 / 4; min-height: 380px; display: flex; flex-direction: column; }
 @media (max-width: 640px) { .purpose--home article { aspect-ratio: auto; min-height: 320px; } }
+
+/* Parallax pattern: one image zoomed to fill, in Neutral Gray */
+.purpose-band { background: url(../assets/img/photos/logo-pattern-grey.jpg) center / cover no-repeat var(--white); background-attachment: fixed; }
