@@ -776,3 +776,8 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 /* Footer: brand assets as a text link */
 .footer__dl { color: var(--white); font-weight: 600; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
 .footer__dl:hover { opacity: .8; }
+
+/* No scroll-progress line under the header */
+.progress { display: none; }
+/* Dropdowns: no orange border */
+.dropdown { border-top: 0; }
