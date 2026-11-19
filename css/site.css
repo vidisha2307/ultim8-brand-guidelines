@@ -800,3 +800,8 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .look__dots { display: flex; gap: 8px; }
 .look__dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--grey); transition: background .3s, width .3s; }
 .look__dots i.is-on { background: var(--orange); width: 24px; border-radius: 4px; }
+
+/* End-of-page navigation: simple Previous / Next buttons */
+.pager { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 40px var(--m); }
+.pager a, .pager a.btn--ghost { font-size: 15px; font-weight: 600; padding: 0 24px; border-radius: var(--btn-r); background: var(--white); color: var(--orange); box-shadow: inset 0 0 0 2px var(--orange); text-align: center; }
+.pager a:hover { background: var(--orange); color: var(--white); }
