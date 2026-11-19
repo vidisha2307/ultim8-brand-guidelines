@@ -434,3 +434,6 @@ p, small, .meta, .note-line { text-wrap: pretty; }
 .pc__img img.ph { width: 128px; height: 128px; object-fit: cover; border-radius: 12px; mix-blend-mode: multiply; }
 /* Compare & Choose card: more room between the text and the arrow */
 .card--3 p { margin-bottom: 18px; }
+
+/* Find a Product menu: aisle number shows on every category, including the selected one */
+.side button.on small { display: inline; margin-left: auto; }

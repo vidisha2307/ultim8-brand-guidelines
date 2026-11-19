@@ -149,7 +149,7 @@ const ROWS = {
   function sidebar(active) {
     return `<nav class="side" aria-label="Categories">${CATS.map(c => {
       const n = Object.values(P).filter(p => p.cat === c.id).length;
-      return `<button class="${c.id === active ? 'on' : ''}" data-cat="${c.id}"><span>${c.name}</span><small>${n || 'Aisle ' + c.aisle}</small></button>`;
+      return `<button class="${c.id === active ? 'on' : ''}" data-cat="${c.id}"><span>${c.name}</span><small>Aisle ${c.aisle}</small></button>`;
     }).join('')}</nav>`;
   }
   function findResults(cols) {
@@ -212,11 +212,11 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
       <div class="hello"><small>WELCOME TO ULTIM8</small><h1>How would you<br>like to shop today?</h1>
         <p>Find products, get inspired, compare options and create your shopping list — all in one place.</p></div>
       <div class="cards">
-        <button class="card card--1" data-go="find"><i data-u8="i10"></i><h2>Find a Product</h2><p>Search for your favorite items</p><span class="circle-go"></span><img src="${IMG('hero-apple')}" alt=""></button>
-        <button class="card card--2" data-go="recipes"><i data-u8="i14"></i><h2>Shop by Recipe</h2><p>Get ingredients for your favorite meals</p><span class="circle-go"></span><img src="${IMG('hero-pasta')}" alt=""></button>
-        <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>Compare products to pick the right option for you</p><span class="circle-go"></span><img src="${IMG('hero-milk')}" alt=""></button>
+        <button class="card card--1" data-go="find"><i data-u8="i10"></i><h2>Find a Product</h2><p>Search for your favorite items</p><span class="circle-go"></span><img src="${IMG('hero-apple-cut')}" alt=""></button>
+        <button class="card card--2" data-go="recipes"><i data-u8="i14"></i><h2>Shop by Recipe</h2><p>Get ingredients for your favorite meals</p><span class="circle-go"></span><img src="${IMG('hero-pasta-cut')}" alt=""></button>
+        <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>Compare products to pick the right option for you</p><span class="circle-go"></span><img src="${IMG('hero-milk-cut')}" alt=""></button>
       </div>
-      ${['produce', 'dairy', 'pantry', 'decor', 'kids'].map(catBlock).join('')}</div>`,
+      ${['produce', 'dairy', 'pantry', 'decor', 'kids'].map(id => krow(CATS.find(c => c.id === id).name, `Aisle ${CATS.find(c => c.id === id).aisle}`, ROWS[id].flatMap(r => r[1]).map(i => productCard(P[i], { loc: true })).join(''))).join('')}</div>`,
 
     find: () => `<div class="page">${pageHead('Find a Product', 'Search for your favorite items.', searchBox('findSearch', 'Search products, brands, or categories...', S.find.q))}${browse('find', 4)}
       ${S.find.q ? '' : ['produce', 'dairy', 'pantry'].filter(id => id !== S.find.cat).map(id => productRow(id, 'Also in ' + CATS.find(c => c.id === id).name)).join('') + aisleRow('More Aisles', ['meat', 'snacks', 'frozen', 'household', 'personal'])}</div>`,
