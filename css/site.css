@@ -723,3 +723,7 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
   .nav__menu { top: calc(var(--nav) + 20px); left: 16px; right: 16px; border-radius: 16px; }
 }
 .progress { top: calc(var(--nav) + 14px); }
+
+/* Homepage scroll arrow: a little smaller */
+.hero__down { width: 42px; height: 42px; margin-left: -21px; border-radius: 8px; }
+.hero__down::after { width: 9px; height: 9px; margin-left: -4.5px; border-width: 0 2.5px 2.5px 0; }
