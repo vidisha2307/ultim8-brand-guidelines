@@ -1,6 +1,6 @@
 /* ULTIM8 AI Kiosk — interactive prototype
-   Four Key Functions: Find a Product · Shop by Recipe · Compare & Choose · Your Past Orders
-   + Review Your Cart · Print Shopping List (final cart only) · Proceed to Purchase */
+   In-store kiosk: Find a Product · Shop by Recipe · Compare & Choose
+   + My Shopping List · Print List (sorted by aisle) — everything is done in the store */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -78,7 +78,7 @@
     const before = qty(id);
     if (q <= 0) delete S.cart[id]; else S.cart[id] = q;
     updateBadge();
-    if (!silent && q > before) toast(`${P[id].name} added to your cart`, "View Cart", () => go("cart"));
+    if (!silent && q > before) toast(`${P[id].name} added to your list`, "View List", () => go("cart"));
     rerenderBits();
   }
   function addList(item) {
@@ -92,7 +92,7 @@
   function addBtn(id) {
     const q = qty(id);
     return q ? `<div class="stepper stepper--o" data-step="${id}"><button data-d="-1" aria-label="Remove one">−</button><span>${q}</span><button data-d="1" aria-label="Add one">+</button></div>`
-      : `<button class="kb" data-add="${id}">${u8("i15")}Add Item</button>`;
+      : `<button class="kb" data-add="${id}">${u8("i15")}Add to List</button>`;
   }
   function rerenderBits() {
     $$('[data-slot]').forEach(el => { el.innerHTML = addBtn(el.dataset.slot); el.closest('.pc')?.classList.toggle('in', !!qty(el.dataset.slot)); });
@@ -152,6 +152,17 @@
       <div id="${prefix}Results">${findResults(cols)}</div></div></div>`;
   }
 
+/* rows of options (each screen scrolls through 3–4 of these) */
+function krow(title, sub, inner) {
+  return `<section class="krow"><div class="krow__h"><h2>${title}</h2>${sub ? `<span>${sub}</span>` : ''}</div><div class="krow__scroll">${inner}</div></section>`;
+}
+const catProducts = id => Object.values(P).filter(p => p.cat === id);
+const productRow = (id, title) => { const c = CATS.find(c => c.id === id); return krow(title || c.name, `Aisle ${c.aisle}`, catProducts(id).map(p => productCard(p, { loc: true })).join('')); };
+const recipeCard = r => `<article class="rc"><img src="${r.img}" alt=""><div><h3>${r.name}</h3><span class="meta">${r.mins} mins • ${r.items.length} items</span><button class="kb" data-recipe="${r.id}">View Ingredients</button></div></article>`;
+const recipeRow = (title, tag, skip) => krow(title, '', RECIPES.filter(r => (!tag || r.tags.includes(tag)) && r.id !== skip).map(recipeCard).join(''));
+const aisleRow = (title, ids) => krow(title, 'Tap an aisle to see it on the store map', CATS.filter(c => !ids || ids.includes(c.id)).map(c => `<button class="aisle-tile" data-map="${c.aisle}"><b>Aisle ${c.aisle}</b><span>${c.name}</span></button>`).join(''));
+const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by side', catProducts(id).map(p => `<article class="pc"><button class="pc__img" data-detail="${p.id}" aria-label="More about ${p.name}"><img src="${p.img}" alt=""></button><h3>${p.name}</h3><div class="unit">${p.unit}</div><div class="price">${money(p.price)}</div><div class="act"><button class="kb kb--ghost" data-cmpadd="${p.id}" ${S.compare.includes(p.id) ? 'disabled' : ''}>${u8('i13')}${S.compare.includes(p.id) ? 'Comparing' : 'Compare'}</button></div></article>`).join(''));
+
   /* ---------------- screens ---------------- */
   const SCREENS = {
     welcome: () => `<section class="welcome" data-start>
@@ -170,18 +181,18 @@
         <button class="card card--1" data-go="find"><i data-u8="i10"></i><h2>Find a Product</h2><p>Search for your favorite items</p><span class="circle-go"></span><img src="${IMG('hero-apple')}" alt=""></button>
         <button class="card card--2" data-go="recipes"><i data-u8="i14"></i><h2>Shop by Recipe</h2><p>Get ingredients for your favorite meals</p><span class="circle-go"></span><img src="${IMG('hero-pasta')}" alt=""></button>
         <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>See options and find what’s right for you</p><span class="circle-go"></span><img src="${IMG('hero-milk')}" alt=""></button>
-        <button class="card card--4" data-go="orders"><i data-u8="i12"></i><h2>Your Past Orders</h2><p>Quickly reorder your favorites</p><span class="circle-go"></span><img src="${IMG('hero-bag')}" alt=""></button>
       </div>
-      ${browse('home', 6)}</div>`,
+      ${productRow('produce', 'Fresh Produce')}${productRow('dairy', 'Dairy & Eggs')}${recipeRow('Recipe Ideas')}${aisleRow('Find Your Aisle')}</div>`,
 
-    find: () => `<div class="page">${pageHead('Find a Product', 'Search for your favorite items.', searchBox('findSearch', 'Search products, brands, or categories...', S.find.q))}${browse('find', 4)}</div>`,
+    find: () => `<div class="page">${pageHead('Find a Product', 'Search for your favorite items.', searchBox('findSearch', 'Search products, brands, or categories...', S.find.q))}${browse('find', 4)}
+      ${S.find.q ? '' : ['produce', 'dairy', 'pantry'].filter(id => id !== S.find.cat).map(id => productRow(id, 'Also in ' + CATS.find(c => c.id === id).name)).join('') + aisleRow('More Aisles', ['meat', 'snacks', 'frozen', 'household', 'personal'])}</div>`,
 
     recipes: () => {
       const tabs = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Vegetarian'];
       const list = RECIPES.filter(r => S.recTab === 'All' || r.tags.includes(S.recTab));
       return `<div class="page">${pageHead('Quick &amp; Easy Recipes', 'Shop ingredients for your favorite meals.')}
         <div class="tabs">${tabs.map(t => `<button class="${t === S.recTab ? 'on' : ''}" data-rtab="${t}">${t}</button>`).join('')}</div>
-        <div class="grid">${list.map(r => `<article class="rc"><img src="${r.img}" alt=""><div><h3>${r.name}</h3><span class="meta">${r.mins} mins • ${r.items.length} items</span><button class="kb" data-recipe="${r.id}">View Ingredients</button></div></article>`).join('')}</div></div>`;
+        ${S.recTab === 'All' ? recipeRow('Quick Breakfasts', 'Breakfast') + recipeRow('Easy Lunches', 'Lunch') + recipeRow('Dinner Tonight', 'Dinner') + recipeRow('Vegetarian Favorites', 'Vegetarian') : `<div class="grid">${list.map(recipeCard).join('')}</div>`}</div>`;
     },
 
     recipe: () => {
@@ -201,7 +212,8 @@
           <div class="recipe__serves">Serves<div class="stepper"><button data-serves="-2" aria-label="Fewer servings">−</button><span>${S.serves}</span><button data-serves="2" aria-label="More servings">+</button></div></div></div>
           <div><div class="ing">${rows}</div>
             <div class="ing__foot"><div><b>${n} of ${r.items.length} items · ${money(total)}</b><div style="font-size:20px;color:var(--soft)">Tap an item to leave it out. Items without a price go on your shopping list.</div></div>
-            <button class="kb kb--lg" data-addrecipe ${n ? '' : 'disabled'}>${u8('i15')}Add Items</button></div></div></div></div>`;
+            <button class="kb kb--lg" data-addrecipe ${n ? '' : 'disabled'}>${u8('i15')}Add to List</button></div></div></div>
+        ${recipeRow('More Recipes to Try', '', r.id)}</div>`;
     },
 
     compare: () => {
@@ -224,41 +236,17 @@
             ${rows.map(r => `<div class="cmp__row"><div>${r}</div>${slots.map(id => `<div>${id ? (P[id].spec[r] || '—') : ''}</div>`).join('')}</div>`).join('')}
             <div class="cmp__row"><div>Location</div>${slots.map(id => `<div>${id ? loc(P[id]) : ''}</div>`).join('')}</div></div>
           <button class="cmp__nav cmp__nav--r" data-cmpnav="1" ${start + 3 >= ids.length ? 'disabled' : ''} aria-label="Next products"></button></div>
-        ${S.cmpWhy ? `<p class="note-line" style="margin-top:20px;font-size:22px">${whyText()}</p>` : ''}</div>`;
-    },
-
-    orders: () => {
-      const tabs = ['All Orders', 'Frequently Bought', 'Lists'];
-      let body = '';
-      if (S.ordTab === 'All Orders') {
-        const q = S.ordQ.trim().toLowerCase();
-        const list = ORDERS.filter(o => !q || o.no.includes(q) || o.date.toLowerCase().includes(q) || o.items.some(([id]) => P[id].name.toLowerCase().includes(q)));
-        body = list.length ? list.map(o => {
-          const n = o.items.reduce((a, [, c]) => a + c, 0), now = o.items.reduce((t, [id, c]) => t + P[id].price * c, 0);
-          return `<article class="oc ${S.openOrder === o.no ? 'open' : ''}"><div class="meta"><h3>Order #${o.no}</h3>${o.date}<br>${n} items</div>
-            <div class="thumbs">${o.items.map(([id]) => `<span><img src="${P[id].img}" alt="${P[id].name}"></span>`).join('')}</div>
-            <div class="total">${money(o.paid)}</div><button class="kb" data-reorder="${o.no}">${u8("i15")}Add All</button>
-            <button class="more ${S.openOrder === o.no ? 'open' : ''}" data-openorder="${o.no}" aria-label="Order details"></button>            <div class="oc__detail">${o.items.map(([id, c]) => `<div class="oc__line"><img src="${P[id].img}" alt=""><b>${P[id].name}</b><span>Qty ${c}</span><span>${money(P[id].price * c)}</span><div data-slot="${id}">${addBtn(id)}</div></div>`).join('')}
-              <p class="note-line" style="margin:6px 0 0">Today’s prices apply — this order would be ${money(now)} today.</p></div></article>`;
-        }).join('') : `<div class="empty"><div><h3>No orders match “${S.ordQ}”.</h3><p>Try an order number or a product name, like “banana”.</p></div></div>`;
-      } else if (S.ordTab === 'Frequently Bought') {
-        const freq = {}; ORDERS.forEach(o => o.items.forEach(([id, c]) => freq[id] = (freq[id] || 0) + c));
-        body = `<div class="grid">${Object.entries(freq).sort((a, b) => b[1] - a[1]).map(([id, n]) => productCard(P[id]).replace('<h3>', `<div class="loc">Bought ${n} times</div><h3>`)).join('')}</div>`;
-      } else {
-        body = `<div class="grid" style="grid-template-columns:repeat(3,1fr)">${LISTS.map((l, i) => `<div class="list-card"><h3>${l.name}</h3><div style="font-size:21px;color:var(--soft)">${l.items.length} items · ${money(l.items.reduce((t, id) => t + P[id].price, 0))}</div>
-          <div class="thumbs">${l.items.map(id => `<span><img src="${P[id].img}" alt="${P[id].name}"></span>`).join('')}</div><button class="kb" data-addlist="${i}">${u8("i15")}Add List</button></div>`).join('')}</div>`;
-      }
-      return `<div class="page">${pageHead('Your Past Orders', 'Quickly reorder your favorites.', S.ordTab === 'All Orders' ? searchBox('orderSearch', 'Search past orders...', S.ordQ) : '')}
-        <div class="with-side">${sidebar('')}<div><div class="tabs">${tabs.map(t => `<button class="${t === S.ordTab ? 'on' : ''}" data-otab="${t}">${t}</button>`).join('')}</div>${body}</div></div></div>`;
+        ${S.cmpWhy ? `<p class="note-line" style="margin-top:20px;font-size:22px">${whyText()}</p>` : ''}
+        ${compareRow('dairy', 'Compare Milk &amp; Eggs')}${compareRow('produce', 'Compare Fresh Produce')}${compareRow('pantry', 'Compare Pantry Staples')}</div>`;
     },
 
     cart: () => {
       const ids = Object.keys(S.cart);
-      if (!ids.length && !S.list.length) return `<div class="page">${pageHead('Review Your Cart', 'Check your items and choose how you’d like to continue.')}
-        <div class="empty-cart">${u8('mark8')}<h2>Your cart is ready when you are.</h2><p>Let’s find something good — search, browse a recipe, or reorder a favorite.</p>
-        <button class="kb kb--lg" data-go="home">Start Shopping</button></div></div>`;
+      if (!ids.length && !S.list.length) return `<div class="page">${pageHead('My Shopping List', 'Everything you want to pick up today, with where to find it.')}
+        <div class="empty-cart">${u8('mark8')}<h2>Your list is ready when you are.</h2><p>Let’s find something good — search for a product or browse a recipe.</p>
+        <button class="kb kb--lg" data-go="home">Start Shopping</button></div>${productRow('produce', 'Fresh Produce')}${productRow('dairy', 'Dairy & Eggs')}${recipeRow('Recipe Ideas')}</div>`;
       const sub = subtotal(), tax = sub * TAX;
-      return `<div class="page">${pageHead('Review Your Cart', 'Check your items and choose how you’d like to continue.')}
+      return `<div class="page">${pageHead('My Shopping List', 'Everything you want to pick up today, sorted by aisle when you print it.')}
         <div class="cart"><div>
           ${ids.length ? `<div class="cart__list">${ids.map(id => { const p = P[id]; return `<div class="cl"><img src="${p.img}" alt=""><div><h3>${p.name}</h3><small>${p.unit}</small><span class="loc">${loc(p)}</span></div><div class="price">${money(p.price * qty(id))}</div>
             <div class="stepper"><button data-cstep="${id}" data-d="-1" aria-label="Remove one">−</button><span>${qty(id)}</span><button data-cstep="${id}" data-d="1" aria-label="Add one">+</button></div><button class="rm" data-crm="${id}">Remove</button></div>`; }).join('')}</div>` : ''}
@@ -267,29 +255,8 @@
         <aside class="summary"><div class="row"><span>Subtotal</span><span>${money(sub)}</span></div><div class="row"><span>Estimated Tax</span><span>${money(tax)}</span></div><hr>
           <div class="row total"><span>Total</span><span>${money(sub + tax)}</span></div>
           <button class="kb kb--ghost kb--lg" data-print>${u8("i16")}Print List</button>
-          <button class="kb kb--lg" data-go="checkout" ${ids.length ? '' : 'disabled'}>${u8("i15")}Checkout</button>
-          <p class="save">Your printed list is sorted by aisle, so you can walk the store once — no doubling back.</p></aside></div></div>`;
-    },
-
-    checkout: () => {
-      const M = [
-        ['self', 'i15', 'Self Checkout', 'Pick up your items and scan them at any self checkout lane. Show your code to load this cart.', 'Ready now'],
-        ['assisted', 'i11', 'Assisted Checkout', 'A ULTIM8 Helper will ring you up at the assisted lanes by the entrance.', 'Ready now'],
-        ['pickup', 'i12', 'Store Pick-Up', 'Relax while we pick and pack your order. We’ll text you when it’s ready at the pick-up counter.', 'Ready in about 1 hour'],
-        ['delivery', 'mark8', 'Home Delivery', 'Our orange trucks bring your groceries to your door.', 'Today, 5–7 PM']
-      ];
-      const sub = subtotal();
-      return `<div class="page">${pageHead('How would you like to finish?', 'Choose the option that works best for you today.')}
-        <div class="methods">${M.map(([id, ic, t, d, w]) => `<button class="method ${S.method === id ? 'on' : ''}" data-method="${id}">${u8(ic)}<h3>${t}</h3><p>${d}</p><small>${w}</small></button>`).join('')}</div>
-        <div class="checkout-foot"><span>${Object.values(S.cart).reduce((a, b) => a + b, 0)} items · Total <b>${money(sub * (1 + TAX))}</b></span>
-          <button class="kb kb--lg" data-confirm ${S.method ? '' : 'disabled'}>Confirm</button></div></div>`;
-    },
-
-    done: () => {
-      const msgs = { self: 'Head to any self checkout lane and scan this code to load your cart.', assisted: 'Show this code to a ULTIM8 Helper at the assisted lanes.', pickup: 'We’re picking your items now. Show this code at the pick-up counter.', delivery: 'Your order is on our delivery route for today, 5–7 PM.' };
-      return `<div class="page"><div class="done"><div><h1>You’re all set!</h1><p>${msgs[S.method]}</p><span class="code">${S.code}</span>
-        <p style="font-size:24px">Thanks for shopping with us. Less to decide, more to enjoy.</p>
-        <div class="acts"><button class="kb kb--lg" data-restart>Done</button></div></div>${u8('mark8', 'done__mark')}</div></div>`;
+          <p class="save">Your printed list is sorted by aisle, so you can walk the store once — no doubling back.</p></aside></div>
+        ${productRow('dairy', 'Don’t Forget')}${recipeRow('Make It a Meal')}</div>`;
     }
   };
 
@@ -339,8 +306,7 @@
     <button data-go="find"><i data-u8="i10"></i>Find a Product</button>
     <button data-go="recipes"><i data-u8="i14"></i>Shop by Recipe</button>
     <button data-go="compare"><i data-u8="i13"></i>Compare &amp; Choose</button>
-    <button data-go="orders"><i data-u8="i12"></i>Your Past Orders</button>
-    <button data-go="cart"><i data-u8="i15"></i>Review Your Cart</button><hr>
+    <button data-go="cart"><i data-u8="i15"></i>My Shopping List</button><hr>
     <button class="sw" id="bigText">Larger text<i></i></button>
     <button data-help><i data-u8="i11"></i>Call Helper</button>
     <button data-restart><i data-u8="spark"></i>Start Over</button>
@@ -371,7 +337,7 @@
       ${Object.keys(groups).sort((a, b) => a - b).map(a => `<div class="r-aisle">AISLE ${a} · ${AISLES[a - 1].toUpperCase()}</div>${groups[a].map(([n, pr]) => `<div class="r-row"><i></i><span>${n}</span><span>${pr}</span></div>`).join('')}`).join('')}
       <hr><div class="r-tot"><span>EST. TOTAL</span><span>${money(sub * (1 + TAX))}</span></div><div class="r-c" style="font-size:15px">incl. est. tax ${money(sub * TAX)}</div>
       <div class="bar"></div><div class="r-c">HAVE A GREAT SHOP!</div>
-      <div class="r-acts"><button class="kb kb--quiet" data-closeprint>Take List</button><button class="kb" data-go="checkout" data-closeprint>Checkout</button></div>`;
+      <div class="r-acts"><button class="kb" data-closeprint>Take List</button></div>`;
     u8.hydrate(paper);
     scrim.classList.add('on'); printer.classList.add('on'); paper.scrollTop = 0;
   }
@@ -403,7 +369,7 @@
     if (d.cat) { S.find = { cat: d.cat, sub: 'All', q: '' }; if (S.screen === 'orders') return go('find'); return render(true); }
     if (d.sub) { S.find.sub = d.sub; return render(true); }
     if (d.clear) { if (d.clear === 'orderSearch') S.ordQ = ''; else S.find.q = ''; return render(true); }
-    if (d.listadd) { const c = CATS.find(c => c.id === d.listadd); addList({ name: c.name, qty: '', aisle: c.aisle }); toast(`${c.name} added to your shopping list`, "View Cart", () => go("cart")); return render(true); }
+    if (d.listadd) { const c = CATS.find(c => c.id === d.listadd); addList({ name: c.name, qty: '', aisle: c.aisle }); toast(`${c.name} added to your shopping list`, "View List", () => go("cart")); return render(true); }
     if (d.map) return openSheet(`<div class="pd__where"><h2 style="font-weight:400;font-size:52px;margin:0 0 10px">Aisle ${d.map}: ${AISLES[d.map - 1]}</h2><p style="font-size:24px;color:var(--soft);margin:0 0 26px">Walk past the produce tables and look for the orange aisle sign.</p>${mapHtml(+d.map)}</div>`);
     // recipes
     if (d.rtab) { S.recTab = d.rtab; return render(true); }
@@ -413,7 +379,7 @@
     if (d.addrecipe !== undefined) {
       const r = RECIPES.find(x => x.id === S.recipeId), off = S.recipeOff[r.id] || {}, f = S.serves / 4; let n = 0;
       r.items.forEach((it, i) => { if (off[i]) return; n++; if (Array.isArray(it)) S.cart[it[0]] = qty(it[0]) + Math.max(1, Math.round(it[1] * f)); else addList(it); });
-      updateBadge(); toast(`${n} ${r.name} ingredients added`, "View Cart", () => go("cart")); return render(true);
+      updateBadge(); toast(`${n} ${r.name} ingredients added to your list`, "View List", () => go("cart")); return render(true);
     }
     // compare
     if (d.cmprm) { S.compare = S.compare.filter(x => x !== d.cmprm); if (S.cmpPick === d.cmprm) S.cmpPick = null; return render(true); }
@@ -456,7 +422,7 @@
     idle = setTimeout(() => {
       if (S.screen === 'welcome') return;
       let n = 15;
-      openSheet(`<div class="idle"><h2>Still shopping?</h2><p>We’ll start a fresh session in <b id="idleN">${n}</b> seconds to keep your cart private.</p><div class="acts"><button class="kb kb--lg" data-close>Keep Shopping</button><button class="kb kb--ghost kb--lg" data-restart>Start Over</button></div></div>`);
+      openSheet(`<div class="idle"><h2>Still shopping?</h2><p>We’ll start a fresh session in <b id="idleN">${n}</b> seconds to keep your list private.</p><div class="acts"><button class="kb kb--lg" data-close>Keep Shopping</button><button class="kb kb--ghost kb--lg" data-restart>Start Over</button></div></div>`);
       const iv = setInterval(() => { n--; const el = $('#idleN'); if (!el || !sheet.classList.contains('on')) return clearInterval(iv); el.textContent = n; if (n <= 0) { clearInterval(iv); restart(); } }, 1000);
     }, IDLE_MS);
   }
@@ -473,11 +439,11 @@
   const embed = new URLSearchParams(location.search).has('embed');
   document.body.classList.toggle('embed', embed);
   function fit() {
-    const dev = $('#device'), pad = embed ? 0 : 80, w = 1920 + pad, h = 1080 + pad;
-    const s = Math.min(innerWidth / (w + (embed ? 0 : 60)), innerHeight / (h + (embed ? 0 : 60)));
-    dev.style.transform = `scale(${s})`;
+    const dev = $('#device'), pad = embed ? 0 : 36, stand = embed ? 0 : 330, w = 1920 + pad, h = 1080 + pad;
+    const s = Math.min(innerWidth / (w + (embed ? 0 : 120)), innerHeight / (h + stand + (embed ? 0 : 140)));
+    dev.style.transform = `scale(${s})`; dev.style.transformOrigin = 'center top';
     dev.style.position = 'absolute'; dev.style.left = '50%'; dev.style.top = '50%';
-    dev.style.margin = `${-h / 2}px 0 0 ${-w / 2}px`;
+    dev.style.margin = `${-(h + stand) * s / 2}px 0 0 ${-w / 2}px`;
   }
   addEventListener('resize', fit); fit();
 

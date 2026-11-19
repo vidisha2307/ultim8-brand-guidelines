@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="u8-version" content="36">
-<script>/* always show the latest published version */(function(){var v='36';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
+<meta name="u8-version" content="37">
+<script>/* always show the latest published version */(function(){var v='37';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
 <title>ULTIM8 — AI Kiosk</title>
 <link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://use.typekit.net/bsr5idk.css">
-<link rel="stylesheet" href="kiosk.css?v=3">
+<link rel="stylesheet" href="kiosk.css?v=4">
 </head>
 <body>
 <div class="device" id="device">
@@ -17,7 +17,7 @@
     <header class="kh" id="kh">
       <button class="kh__logo" data-go="home" aria-label="ULTIM8 home"><i data-u8="wordmark"></i></button>
       <div class="kh__right">
-        <button class="kh__cart" data-go="cart" aria-label="Review your cart"><i data-u8="i15"></i><span>Cart</span><b id="cartCount">0</b></button>
+        <button class="kh__cart" data-go="cart" aria-label="My shopping list"><i data-u8="i15"></i><span>My List</span><b id="cartCount">0</b></button>
         <button class="kh__menu" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </header>
@@ -30,9 +30,10 @@
     <div class="printer" id="printer"><div class="printer__slot"></div><div class="paper" id="paper"></div></div>
     <div class="ktoast" id="ktoast" role="status"></div>
   </div>
+  <div class="stand" aria-hidden="true"><div class="stand__scan"><i></i><span>Price check · scan item here</span></div><div class="stand__neck"></div><div class="stand__base"></div></div>
 </div>
 <script src="../assets/brand/svg/marks.js?v=3"></script>
 <script src="../assets/brand/u8.js?v=3"></script>
-<script src="kiosk.js?v=3"></script>
+<script src="kiosk.js?v=4"></script>
 </body>
 </html>
