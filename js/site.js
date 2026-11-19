@@ -129,8 +129,14 @@
       [[0, 0], [1, 0], [0, 1], [1, 1]].forEach(([cx, cy]) => room.insertAdjacentHTML('beforeend', `<span class="room__x" style="width:${x}px;height:${x}px;${cx ? 'right' : 'left'}:0;${cy ? 'bottom' : 'top'}:0">X</span>`));
       room.insertAdjacentHTML('beforeend', `<span class="room__guide" style="top:${x + h / 2}px"></span>`);
       $('#roomOut').textContent = `X = ${Math.round(x)}px`;
+      /* show when the logo is too big: its clear space no longer fits the box */
+      const stage = $('#roomStage'), warn = $('#roomWarn');
+      if (stage && warn) {
+        const tight = room.offsetWidth > stage.clientWidth - 24 || room.offsetHeight > stage.clientHeight - 24;
+        stage.classList.toggle('is-tight', tight); warn.classList.toggle('is-on', tight);
+      }
     }
-    roomRange.addEventListener('input', drawRoom); drawRoom();
+    roomRange.addEventListener('input', drawRoom); addEventListener('resize', drawRoom); drawRoom();
   });
 
   when('.expired__img', () => {
