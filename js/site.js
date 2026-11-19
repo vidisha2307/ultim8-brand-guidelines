@@ -154,18 +154,18 @@
     function setDo(i) {
       const d = DOS[i];
       doStage.className = 'dd__stage ' + (d.cls || '') + (d.small ? ' is-small' : '');
-      paint(doStage, d); doStage.style.boxShadow = 'none'; doStage.querySelector('svg').style.color = d.logo;
+      paint(doStage, d); doStage.querySelector('svg').style.color = d.logo;
       cur.do = i;
       $('#doName').textContent = d.name;
       $$('button', doGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
     }
     DONTS.forEach((name, i) => {
       const b = document.createElement('button'); b.setAttribute('aria-label', name);
-      b.style.backgroundImage = `url(assets/img/book/donts/dont-${i + 1}.png)`;
+      b.style.backgroundImage = `url(assets/img/book/donts/dont-${i + 1}.png?v=2)`;
       b.addEventListener('click', () => setDont(i)); dontGrid.appendChild(b);
     });
     function setDont(i) {
-      dontImg.src = `assets/img/book/donts/dont-${i + 1}.png`; dontImg.alt = DONTS[i];
+      dontImg.src = `assets/img/book/donts/dont-${i + 1}.png?v=2`; dontImg.alt = DONTS[i];
       cur.dont = i;
       $('#dontName').textContent = DONTS[i];
       $$('button', dontGrid).forEach((b, j) => b.classList.toggle('is-on', j === i));
