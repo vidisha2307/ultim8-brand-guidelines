@@ -781,3 +781,22 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 .progress { display: none; }
 /* Dropdowns: no orange border */
 .dropdown { border-top: 0; }
+
+/* Primary: Color Palette in its own section */
+#color-palette .palette { grid-column: 3 / -1; grid-row: 2; }
+@media (max-width: 860px) { #color-palette .palette { grid-column: 1 / -1; } }
+
+/* Experiential: Brand Look — image slider, caption changes as you scroll */
+.look { position: relative; height: calc(var(--n) * 80vh); background: var(--white); }
+.look__sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 96px 24px 32px; box-sizing: border-box; }
+.look__frame { position: relative; margin: 0; width: min(1100px, 100%); flex: 1; max-height: 68vh; border-radius: 16px; overflow: hidden; background: var(--grey); }
+.look__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .6s ease, transform 1.2s ease; }
+.look__img.is-on { opacity: 1; transform: none; }
+.look__caps { position: relative; width: min(1100px, 100%); min-height: 64px; text-align: center; }
+.look__cap { position: absolute; inset: 0; opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
+.look__cap.is-on { opacity: 1; transform: none; }
+.look__cap b { display: block; color: var(--orange); font-weight: 600; text-transform: uppercase; font-size: clamp(20px, 2vw, 28px); margin-bottom: 6px; }
+.look__cap span { font-weight: 300; font-size: 16px; }
+.look__dots { display: flex; gap: 8px; }
+.look__dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--grey); transition: background .3s, width .3s; }
+.look__dots i.is-on { background: var(--orange); width: 24px; border-radius: 4px; }

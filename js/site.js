@@ -278,6 +278,19 @@
     $('#beautyList').addEventListener('mouseleave', () => hot.classList.remove('is-on'));
   });
 
+  /* ================= BRAND LOOK: image + caption change as you scroll ================= */
+  when('#brand-look', () => {
+    const sec = $('#brand-look'), imgs = $$('.look__img', sec), caps = $$('.look__cap', sec), dots = $$('.look__dots i', sec), n = imgs.length;
+    let cur = -1;
+    const upd = () => {
+      const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
+      const p = Math.min(Math.max(-r.top / (span || 1), 0), 0.9999);
+      const i = Math.floor(p * n); if (i === cur) return; cur = i;
+      [imgs, caps, dots].forEach(list => list.forEach((el, k) => el.classList.toggle('is-on', k === i)));
+    };
+    addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+  });
+
   /* ================= AISLE 04 ================= */
   when('#kioskFrame', () => {
     const frame = $('#kioskFrame');
