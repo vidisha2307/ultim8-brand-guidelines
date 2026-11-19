@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="u8-version" content="32">
-<script>/* always show the latest published version */(function(){var v='32';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
+<meta name="u8-version" content="33">
+<script>/* always show the latest published version */(function(){var v='33';fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="u8-version" content="(\d+)"/);if(m&&m[1]!==v&&sessionStorage.getItem('u8r')!==m[1]){sessionStorage.setItem('u8r',m[1]);location.replace(location.pathname+'?v='+m[1]+location.hash)}}).catch(function(){})})();</script>
 <title>Primary — ULTIM8 Brand Guidelines</title>
 <meta name="description" content="ULTIM8 Brand Guidelines, Aisle 01: Brand Overview.">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://use.typekit.net/bsr5idk.css">
-<link rel="stylesheet" href="css/site.css?v=31">
+<link rel="stylesheet" href="css/site.css?v=32">
 </head>
 <body class="" data-page="01">
 <header class="nav" id="siteHeader">
@@ -151,13 +151,29 @@
       <p>Orange, our primary color, brings warmth, optimism, and strong brand recognition, while complementary pastels create a sense of comfort and visual balance. Together, these colors establish clear visual hierarchies, reduce cognitive overload, and make everyday shopping feel simpler, more enjoyable, and intuitive.</p>
     </div>
     <div class="swatches" id="swatches"></div>
-    <div class="ratio" aria-label="60-30-10 color distribution">
-      <div style="flex:60;background:var(--orange);color:var(--white)">60%</div>
-      <div style="flex:30;background:var(--peach)">30%</div>
-      <div style="flex:10;background:var(--yellow)">10%</div>
-    </div>
     <p class="hint" style="margin-top:8px">Click a swatch to copy its HEX code.</p>
   </div>
+<div class="mood reveal" id="moodShift">
+  <p class="label">“Mood-Shift” Tetradic Swatch Bar</p>
+  <p class="mood__intro">Pick a mood and watch four brand colors shift into place. Drag the dividers to change each color’s share, then check the preview to see if the mix stays on brand.</p>
+  <div class="mood__moods" id="moodChips" role="tablist" aria-label="Mood"></div>
+  <div class="mood__bar" id="moodBar" aria-label="Tetradic swatch bar: drag the dividers to change each color’s share"></div>
+  <div class="mood__legend" id="moodLegend"></div>
+  <div class="mood__stage">
+    <div class="mood__card" id="moodCard">
+      <span class="mood__tag" id="moodTag">New in store</span>
+      <h3 class="mood__title" id="moodTitle">Fresh picks.<br>Less to decide.</h3>
+      <div class="mood__strip" id="moodStrip"></div>
+      <span class="mood__btn" id="moodBtn">Shop now</span>
+    </div>
+    <div class="mood__check">
+      <p class="mood__score" id="moodScore"></p>
+      <ul class="mood__tips" id="moodTips"></ul>
+      <div class="mood__acts"><button class="btn btn--ghost" id="moodRotate">Rotate Roles</button><button class="btn" id="moodReset">Reset Mood</button></div>
+    </div>
+  </div>
+  <p class="hint">Click a color in the bar to copy its HEX code.</p>
+</div>
 </section>
 </main>
 <footer class="footer">
@@ -174,6 +190,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="assets/brand/svg/marks.js?v=3"></script>
 <script src="assets/brand/u8.js?v=3"></script>
-<script src="js/site.js?v=10"></script>
+<script src="js/site.js?v=11"></script>
 </body>
 </html>

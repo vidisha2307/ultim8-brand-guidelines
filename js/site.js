@@ -213,6 +213,81 @@
     });
   });
 
+  /* "MOOD-SHIFT" TETRADIC SWATCH BAR: four brand colors per mood, draggable shares, live on-brand check */
+  when('#moodShift', () => {
+    const C = {
+      orange: ['Ultim8 Orange', '#F26522'], deep: ['Deep Orange', '#CB3727'], peach: ['Peach', '#FDD3BB'],
+      butter: ['Buttercream', '#FFF2D5'], yellow: ['Sunshine Yellow', '#FFC83D'], grey: ['Neutral Gray', '#E6E7E8'], white: ['White', '#FFFFFF']
+    };
+    const ROLES = ['Dominant', 'Secondary', 'Support', 'Accent'];
+    const MOODS = [
+      { name: 'Energetic', cols: ['orange', 'white', 'deep', 'yellow'], pct: [60, 25, 10, 5], title: 'Fresh picks.<br>Less to decide.' },
+      { name: 'Welcoming', cols: ['butter', 'orange', 'peach', 'deep'], pct: [60, 25, 10, 5], title: 'Welcome in.<br>We’ve got you.' },
+      { name: 'Calm', cols: ['white', 'grey', 'peach', 'orange'], pct: [60, 25, 10, 5], title: 'Less noise.<br>More clarity.' },
+      { name: 'Celebration', cols: ['deep', 'orange', 'yellow', 'white'], pct: [60, 25, 10, 5], title: 'Big savings.<br>More to enjoy.' }
+    ];
+    const lum = hex => { const c = [1, 3, 5].map(i => parseInt(hex.substr(i, 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+    const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+    const best = bg => ratio(bg, '#111111') >= ratio(bg, '#FFFFFF') ? '#111111' : '#FFFFFF';
+    const bar = $('#moodBar'), legend = $('#moodLegend'), chips = $('#moodChips');
+    let mood = 0, cols = [], pct = [];
+    chips.innerHTML = MOODS.map((m, i) => `<button class="chip" role="tab" data-i="${i}">${m.name}</button>`).join('');
+    function load(i) {
+      mood = i; cols = [...MOODS[i].cols]; pct = [...MOODS[i].pct];
+      $$('button', chips).forEach((b, j) => { b.classList.toggle('is-on', j === i); b.setAttribute('aria-selected', j === i); });
+      $('#moodTitle').innerHTML = MOODS[i].title; draw();
+    }
+    function draw() {
+      bar.innerHTML = cols.map((k, i) => `<button class="mood__seg" data-i="${i}" style="flex:${pct[i]};background:${C[k][1]};color:${best(C[k][1])}" aria-label="${C[k][0]} ${C[k][1]}, ${Math.round(pct[i])}%"><b>${Math.round(pct[i])}%</b><span>${C[k][0]}</span></button>` + (i < 3 ? `<span class="mood__handle" data-h="${i}" aria-hidden="true"></span>` : '')).join('');
+      legend.innerHTML = cols.map((k, i) => `<span><i style="background:${C[k][1]}"></i>${ROLES[i]} · ${C[k][0]} <em>${C[k][1]}</em></span>`).join('');
+      paint();
+    }
+    function paint() {
+      const [d, s, sp, a] = cols.map(k => C[k][1]), card = $('#moodCard');
+      card.style.background = d; card.style.color = best(d);
+      $('#moodStrip').style.background = `linear-gradient(90deg, ${s} 0 ${pct[1] / (pct[1] + pct[2]) * 100}%, ${sp} 0)`;
+      const tag = $('#moodTag'); tag.style.background = sp; tag.style.color = best(sp);
+      const btn = $('#moodBtn'); btn.style.background = a; btn.style.color = best(a);
+      $$('.mood__seg', bar).forEach((el, i) => { el.style.flex = pct[i]; el.querySelector('b').textContent = Math.round(pct[i]) + '%'; });
+      /* on-brand check */
+      const tips = [], txt = ratio(d, best(d)), acc = ratio(a, d);
+      const yi = cols.indexOf('yellow');
+      if (yi > -1 && pct[yi] > 10.5) tips.push(['warn', `Sunshine Yellow is an accent only: keep it at 10% or less (now ${Math.round(pct[yi])}%).`]);
+      if (pct[0] < 50) tips.push(['warn', `Let one color lead: the dominant color should be about 60% (now ${Math.round(pct[0])}%).`]);
+      if (pct[3] > 15) tips.push(['warn', `Accents work best small: keep the accent around 10% (now ${Math.round(pct[3])}%).`]);
+      if (!cols.some(k => ['orange', 'deep'].includes(k))) tips.push(['warn', 'Add Ultim8 Orange or Deep Orange so the layout still reads as ULTIM8.']);
+      if (acc < 1.5) tips.push(['warn', 'The accent blends into the background: rotate roles so the call to action stands out.']);
+      tips.push([txt >= 4.5 ? 'ok' : 'warn', `Text contrast on the background: ${txt.toFixed(1)}:1 ${txt >= 4.5 ? '(passes AA)' : '(below 4.5:1, too light to read)'}`]);
+      const bad = tips.filter(t => t[0] === 'warn').length;
+      $('#moodScore').innerHTML = bad ? `<b>${bad} thing${bad > 1 ? 's' : ''} to fix</b>` : '<b>On brand</b> — balanced and easy to read';
+      $('#moodScore').className = 'mood__score ' + (bad ? 'is-warn' : 'is-ok');
+      $('#moodTips').innerHTML = tips.map(([t, m]) => `<li class="is-${t}">${m}</li>`).join('');
+    }
+    /* drag the dividers between colors */
+    let drag = null;
+    bar.addEventListener('pointerdown', e => {
+      const h = e.target.closest('.mood__handle'); if (!h) return;
+      drag = { i: +h.dataset.h }; h.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    bar.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const r = bar.getBoundingClientRect(), i = drag.i;
+      const before = pct.slice(0, i).reduce((x, y) => x + y, 0), pair = pct[i] + pct[i + 1];
+      let p = (e.clientX - r.left) / r.width * 100 - before;
+      p = Math.max(2, Math.min(pair - 2, p)); pct[i] = p; pct[i + 1] = pair - p; paint();
+    });
+    const end = () => { if (drag) { drag = null; draw(); } };
+    bar.addEventListener('pointerup', end); bar.addEventListener('pointercancel', end);
+    bar.addEventListener('click', e => {
+      const seg = e.target.closest('.mood__seg'); if (!seg) return;
+      const hex = C[cols[+seg.dataset.i]][1]; navigator.clipboard?.writeText(hex).catch(() => {}); toast(`${hex} copied`);
+    });
+    $$('button', chips).forEach(b => b.addEventListener('click', () => load(+b.dataset.i)));
+    $('#moodRotate').addEventListener('click', () => { cols.push(cols.shift()); draw(); });
+    $('#moodReset').addEventListener('click', () => load(mood));
+    load(0);
+  });
+
   /* ALL LOGO VARIATIONS: the original logo's own pieces move into each variation
      Primary Logo → Logo Type → Stacked Logo → Logo Mark → Tagline Logo */
   when('#logoMorph', () => {
