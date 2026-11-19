@@ -743,3 +743,7 @@ input[type=range] { width: 100%; accent-color: var(--orange); }
 
 /* Parallax pattern: one image zoomed to fill, in Neutral Gray */
 .purpose-band { background: url(../assets/img/photos/logo-pattern-grey.jpg) center / cover no-repeat var(--white); background-attachment: fixed; }
+
+/* Vision / Mission / Purpose / Value: Ultim8 Orange on hover, white headline */
+.purpose--home article:hover { background: var(--orange); }
+.purpose--home article:hover h3 { color: var(--white); }
