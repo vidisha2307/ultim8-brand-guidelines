@@ -11,31 +11,27 @@
   /* ---------------- store data ---------------- */
   const AISLES = ['Fresh Produce', 'Bakery', 'Dairy & Eggs', 'Frozen Foods', 'Pantry Staples', 'Meat & Seafood', 'Snacks & Beverages', 'Household Essentials', 'Personal Care', 'Home Decor', 'Kids'];
   const CATS = [
-    { id: 'produce', name: 'Fresh Produce', aisle: 1, subs: ['All', 'Fruits', 'Vegetables', 'Herbs', 'Salads', 'Organic', 'Seasonal'] },
-    { id: 'dairy', name: 'Dairy & Eggs', aisle: 3, subs: ['All', 'Milk', 'Eggs', 'Plant-based'] },
+    { id: 'produce', name: 'Fresh Produce', aisle: 1, subs: ['All', 'Fruits', 'Vegetables', 'Greens'] },
+    { id: 'dairy', name: 'Dairy & Eggs', aisle: 3, subs: ['All', 'Gallon Milk', 'Smaller Sizes & Plant-Based', 'Eggs'] },
     { id: 'meat', name: 'Meat & Seafood', aisle: 6, note: 'Fresh cuts and seafood are prepared to order at our service counter.' },
-    { id: 'pantry', name: 'Pantry Staples', aisle: 5, subs: ['All', 'Pasta & Sauces', 'International'] },
+    { id: 'pantry', name: 'Pantry Staples', aisle: 5, subs: ['All', 'Pasta', 'Sauces & Spreads', 'Canned & International'] },
     { id: 'snacks', name: 'Snacks & Beverages', aisle: 7, note: 'Chips, cookies, juices and sparkling water — all in one aisle.' },
     { id: 'frozen', name: 'Frozen Foods', aisle: 4, note: 'Frozen meals, vegetables and desserts, kept cold along the back wall.' },
     { id: 'household', name: 'Household Essentials', aisle: 8, note: 'Cleaning supplies, paper goods and laundry care.' },
     { id: 'personal', name: 'Personal Care', aisle: 9, note: 'Skin, hair and oral care — right next to the Pharmacy.' },
-    { id: 'decor', name: 'Home Decor', aisle: 10, subs: ['All', 'Living Room', 'Accents'] },
-    { id: 'kids', name: 'Kids Products', aisle: 11, subs: ['All', 'Toys', 'School', 'Everyday'] }
+    { id: 'decor', name: 'Home Decor', aisle: 10, subs: ['All', 'Living Room', 'Accents', 'Plants'] },
+    { id: 'kids', name: 'Kids Products', aisle: 11, subs: ['All', 'Toys', 'Art & School', 'Everyday'] }
   ];
-/* simple brand-colour illustrations for Home Decor and Kids products */
-const ART = {
-  candle: '<rect x="62" y="70" width="76" height="96" rx="10" fill="#FDD3BB"/><rect x="62" y="104" width="76" height="30" fill="#F26522"/><rect x="97" y="52" width="6" height="20" fill="#111"/><path d="M100 22c10 12 12 22 0 32c-12-10-10-20 0-32z" fill="#FFC83D"/>',
-  pillow: '<rect x="34" y="50" width="132" height="110" rx="26" fill="#F26522"/><path d="M100 78l10 27l-10 27l-10-27z" fill="#FFF2D5"/><path d="M60 92l6 13l-6 13l-6-13zM140 92l6 13l-6 13l-6-13z" fill="#FFF2D5"/>',
-  vase: '<path d="M80 40h40v18c0 10 26 26 26 60c0 30-20 46-46 46s-46-16-46-46c0-34 26-50 26-60z" fill="#CB3727"/><rect x="76" y="34" width="48" height="10" rx="5" fill="#F26522"/><path d="M60 118h80" stroke="#FFF2D5" stroke-width="6"/>',
-  frame: '<rect x="40" y="36" width="120" height="132" rx="6" fill="#111"/><rect x="52" y="48" width="96" height="108" fill="#FFF2D5"/><path d="M52 156l30-40l22 26l14-16l30 30z" fill="#F26522"/><circle cx="124" cy="78" r="10" fill="#FFC83D"/>',
-  basket: '<path d="M38 84h124l-14 80H52z" fill="#FDD3BB"/><path d="M46 104h108M50 124h100M54 144h92" stroke="#F26522" stroke-width="6"/><path d="M62 84c0-40 76-40 76 0" fill="none" stroke="#CB3727" stroke-width="8"/>',
-  crayons: '<g transform="rotate(-12 100 100)"><rect x="52" y="54" width="22" height="100" rx="4" fill="#F26522"/><path d="M52 54l11-22l11 22z" fill="#F26522"/><rect x="89" y="54" width="22" height="100" rx="4" fill="#FFC83D"/><path d="M89 54l11-22l11 22z" fill="#FFC83D"/><rect x="126" y="54" width="22" height="100" rx="4" fill="#CB3727"/><path d="M126 54l11-22l11 22z" fill="#CB3727"/><rect x="48" y="96" width="104" height="14" fill="#111" opacity=".85"/></g>',
-  blocks: '<rect x="36" y="110" width="58" height="58" rx="8" fill="#F26522"/><rect x="104" y="110" width="58" height="58" rx="8" fill="#FFC83D"/><rect x="70" y="46" width="58" height="58" rx="8" fill="#CB3727"/><text x="65" y="150" font-size="34" font-family="Arial" font-weight="700" fill="#fff" text-anchor="middle">A</text><text x="133" y="150" font-size="34" font-family="Arial" font-weight="700" fill="#111" text-anchor="middle">B</text><text x="99" y="86" font-size="34" font-family="Arial" font-weight="700" fill="#fff" text-anchor="middle">8</text>',
-  bear: '<circle cx="62" cy="58" r="20" fill="#CB3727"/><circle cx="138" cy="58" r="20" fill="#CB3727"/><circle cx="100" cy="90" r="46" fill="#F26522"/><ellipse cx="100" cy="150" rx="44" ry="34" fill="#F26522"/><ellipse cx="100" cy="104" rx="18" ry="13" fill="#FDD3BB"/><circle cx="84" cy="84" r="5" fill="#111"/><circle cx="116" cy="84" r="5" fill="#111"/><circle cx="100" cy="100" r="5" fill="#111"/>',
-  bottle: '<rect x="76" y="26" width="48" height="22" rx="6" fill="#111"/><rect x="66" y="46" width="68" height="126" rx="22" fill="#F26522"/><rect x="66" y="96" width="68" height="30" fill="#FFF2D5"/><path d="M100 102l6 9l-6 9l-6-9z" fill="#F26522"/>',
-  book: '<rect x="46" y="38" width="112" height="132" rx="8" fill="#FFC83D"/><rect x="46" y="38" width="18" height="132" rx="6" fill="#CB3727"/><circle cx="112" cy="92" r="24" fill="#F26522"/><rect x="80" y="130" width="64" height="10" rx="5" fill="#111"/>'
+/* product photographs (same white-background product style as the rest) */
+const PHOTOS = ['lettuce', 'snap-peas', 'brown-eggs', 'spaghetti', 'peanut-butter', 'canned-fish', 'pillow', 'frame', 'vase-blue', 'candle', 'mug', 'plant', 'plant-2', 'duck', 'cube', 'sorter', 'pencils', 'crayons', 'bottle', 'lunchbox'];
+/* three rows of products for every category */
+const ROWS = {
+  produce: [['Fruits', ['banana', 'apple', 'strawberries', 'orange']], ['Vegetables', ['broccoli', 'tomato', 'carrots', 'pepper']], ['Greens', ['spinach', 'lettuce', 'snap-peas']]],
+  dairy: [['Gallon Milk', ['milk-2', 'milk-whole']], ['Smaller Sizes & Plant-Based', ['milk-carton', 'milk-oat']], ['Eggs', ['eggs', 'brown-eggs']]],
+  pantry: [['Pasta', ['pasta', 'spaghetti']], ['Sauces & Spreads', ['tomato-sauce', 'peanut-butter']], ['Canned & International', ['canned-fish', 'taco-shells']]],
+  decor: [['Living Room', ['pillow', 'frame']], ['Accents', ['vase-blue', 'candle', 'mug']], ['Plants', ['plant', 'plant-2']]],
+  kids: [['Toys', ['duck', 'cube', 'sorter']], ['Art & School', ['pencils', 'crayons']], ['Everyday', ['bottle', 'lunchbox']]]
 };
-const ARTIMG = k => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">${ART[k]}</svg>`);
   const P = {};
   [
     ['banana', 'Banana', 'produce', ['Fruits'], '1 lb (approx. 3–4 pcs)', .59, 'A', 'Naturally sweet and ready to grab for breakfast or a snack.', { Type: 'Fruit', 'Key Benefits': 'Source of potassium', 'Dietary Notes': 'Vegan' }],
@@ -55,19 +51,29 @@ const ARTIMG = k => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns=
     ['pasta', 'Penne Pasta', 'pantry', ['Pasta & Sauces'], '16 oz', 1.89, 'B', 'Classic penne that holds sauce beautifully.', { Type: 'Pasta', 'Key Benefits': 'Ready in 11 minutes', 'Dietary Notes': 'Vegan' }],
     ['tomato-sauce', 'Tomato Sauce', 'pantry', ['Pasta & Sauces'], '24 oz jar', 2.49, 'B', 'Slow-simmered tomato sauce with herbs.', { Type: 'Sauce', 'Key Benefits': 'Ready to heat', 'Dietary Notes': 'Vegan, Gluten-free' }],
     ['taco-shells', 'Taco Shells', 'pantry', ['International'], '12 count', 2.99, 'D', 'Crunchy corn taco shells.', { Type: 'Tortilla', 'Key Benefits': 'Ready to fill', 'Dietary Notes': 'Gluten-free' }],
-    ['candle', 'Citrus Cedar Candle', 'decor', ['Accents'], '8 oz jar', 8.99, 'A', 'Our No. 8 citrus and cedar scent, poured in a reusable jar.', { Type: 'Candle', 'Burn Time': '40 hours' }],
-    ['pillow', 'Diamond Throw Pillow', 'decor', ['Living Room'], '18 × 18 in', 14.99, 'B', 'Soft woven cushion with our diamond pattern.', { Type: 'Cushion', Care: 'Removable, washable cover' }],
-    ['vase', 'Ceramic Vase', 'decor', ['Accents'], '10 in tall', 12.49, 'B', 'Glazed ceramic vase for fresh or dried flowers.', { Type: 'Vase', Material: 'Ceramic' }],
-    ['frame', 'Picture Frame', 'decor', ['Living Room'], '5 × 7 in', 6.99, 'C', 'Slim black frame for your favorite photo.', { Type: 'Frame', Material: 'Wood' }],
-    ['basket', 'Woven Storage Basket', 'decor', ['Living Room'], 'Medium', 11.99, 'C', 'Handy storage for blankets, toys or produce.', { Type: 'Basket', Material: 'Seagrass' }],
-    ['crayons', 'Crayons', 'kids', ['School'], '24 count', 2.99, 'A', 'Bright, non-toxic crayons for little artists.', { Type: 'Art supplies', Ages: '3+' }],
-    ['blocks', 'Building Blocks', 'kids', ['Toys'], '60 pieces', 19.99, 'B', 'Chunky blocks for building, stacking and learning letters.', { Type: 'Toy', Ages: '2+' }],
-    ['bear', 'Plush Bear', 'kids', ['Toys'], '12 in', 9.99, 'B', 'Extra-soft bear, ready for cuddles.', { Type: 'Toy', Ages: '0+' }],
-    ['bottle', 'Kids Water Bottle', 'kids', ['Everyday'], '12 oz', 7.49, 'C', 'Spill-proof bottle that fits in lunch bags.', { Type: 'Bottle', Material: 'BPA-free' }],
-    ['book', 'Picture Book', 'kids', ['School'], 'Hardcover', 5.99, 'D', 'A colorful story for bedtime reading.', { Type: 'Book', Ages: '3–6' }]
+['lettuce', 'Butter Lettuce', 'produce', ['Greens'], '1 head', 1.99, 'E', 'Soft, sweet leaves for salads and wraps.', { Type: 'Leafy green', 'Dietary Notes': 'Vegan' }],
+['snap-peas', 'Snap Peas', 'produce', ['Greens'], '8 oz', 2.49, 'E', 'Crisp, sweet pods to snack on or stir fry.', { Type: 'Vegetable', 'Dietary Notes': 'Vegan' }],
+['brown-eggs', 'Brown Eggs', 'dairy', ['Eggs'], '12 count', 3.79, 'C', 'Grade A large brown eggs.', { Type: 'Eggs', 'Key Benefits': 'Source of protein', 'Dietary Notes': 'Gluten-free' }],
+['spaghetti', 'Italian Pasta Mix', 'pantry', ['Pasta'], '16 oz', 2.29, 'B', 'Spaghetti and penne for any pasta night.', { Type: 'Pasta', 'Dietary Notes': 'Vegan' }],
+['peanut-butter', 'Peanut Butter', 'pantry', ['Sauces & Spreads'], '16 oz jar', 3.49, 'C', 'Smooth, creamy and great on toast.', { Type: 'Spread', 'Key Benefits': 'Source of protein' }],
+['canned-fish', 'Mackerel in Tomato Sauce', 'pantry', ['Canned & International'], '15 oz can', 2.19, 'D', 'Ready-to-eat mackerel in a rich tomato sauce.', { Type: 'Canned fish', 'Key Benefits': 'Source of omega-3' }],
+['pillow', 'White Throw Pillow', 'decor', ['Living Room'], '18 × 18 in', 14.99, 'A', 'Soft cushion with a clean white cover.', { Type: 'Cushion', Care: 'Removable, washable cover' }],
+['frame', 'Wooden Picture Frame', 'decor', ['Living Room'], '8 × 10 in', 9.99, 'A', 'Natural wood frame for your favorite photo.', { Type: 'Frame', Material: 'Wood' }],
+['vase-blue', 'Blue Bud Vase', 'decor', ['Accents'], '9 in tall', 12.49, 'B', 'Glazed ceramic vase for a single stem.', { Type: 'Vase', Material: 'Ceramic' }],
+['candle', 'Pillar Candle', 'decor', ['Accents'], '6 in', 6.99, 'B', 'Unscented pillar candle with a long, even burn.', { Type: 'Candle', 'Burn Time': '40 hours' }],
+['mug', 'White Ceramic Mug', 'decor', ['Accents'], '12 oz', 5.99, 'B', 'Simple everyday mug for coffee or tea.', { Type: 'Mug', Material: 'Ceramic' }],
+['plant', 'Rubber Plant', 'decor', ['Plants'], '6 in pot', 18.99, 'C', 'Glossy leaves that brighten any corner.', { Type: 'Plant', Care: 'Bright, indirect light' }],
+['plant-2', 'Bamboo Palm', 'decor', ['Plants'], '6 in pot', 16.99, 'C', 'Easy-care palm in a textured white pot.', { Type: 'Plant', Care: 'Low light friendly' }],
+['duck', 'Rubber Duck', 'kids', ['Toys'], '4 in', 2.99, 'A', 'The classic bath-time friend.', { Type: 'Bath toy', Ages: '1+' }],
+['cube', 'Puzzle Cube', 'kids', ['Toys'], '3 × 3', 8.99, 'A', 'Twist and turn to match every color.', { Type: 'Puzzle', Ages: '8+' }],
+['sorter', 'Wooden Shape Sorter', 'kids', ['Toys'], '16 pieces', 14.99, 'A', 'Stack and sort colorful wooden shapes.', { Type: 'Toy', Ages: '2+' }],
+['pencils', 'Colored Pencils', 'kids', ['Art & School'], '24 count', 4.99, 'B', 'Bright pencils for drawing and coloring.', { Type: 'Art supplies', Ages: '3+' }],
+['crayons', 'Crayons', 'kids', ['Art & School'], '24 count', 2.99, 'B', 'Bright, non-toxic crayons for little artists.', { Type: 'Art supplies', Ages: '3+' }],
+['bottle', 'Kids Water Bottle', 'kids', ['Everyday'], '12 oz', 7.49, 'C', 'Spill-proof bottle that fits in lunch bags.', { Type: 'Bottle', Material: 'Stainless steel' }],
+['lunchbox', 'Lunch Box', 'kids', ['Everyday'], 'Insulated', 9.99, 'C', 'Keeps lunch cool until the bell rings.', { Type: 'Lunch box', Material: 'Insulated fabric' }]
   ].forEach(([id, name, cat, subs, unit, price, shelf, desc, spec]) => {
     const c = CATS.find(c => c.id === cat);
-    P[id] = { id, name, cat, subs, unit, price, shelf, desc, spec, img: ART[id] ? ARTIMG(id) : IMG(id), aisle: c.aisle };
+    P[id] = { id, name, cat, subs, unit, price, shelf, desc, spec, img: PHOTOS.includes(id) ? `../assets/img/products/photos/${id}.jpg` : IMG(id), photo: PHOTOS.includes(id), aisle: c.aisle };
   });
   const L = (name, qty, aisle) => ({ list: true, name, qty, aisle });
   const RECIPES = [
@@ -128,7 +134,7 @@ const ARTIMG = k => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns=
   const loc = p => `Aisle ${p.aisle} · Shelf ${p.shelf}`;
   function productCard(p, opts = {}) {
     return `<article class="pc ${qty(p.id) ? 'in' : ''}">
-      <button class="pc__img" data-detail="${p.id}" aria-label="More about ${p.name}"><img src="${p.img}" alt=""></button>
+      <button class="pc__img" data-detail="${p.id}" aria-label="More about ${p.name}"><img src="${p.img}" alt=""${p.photo ? ' class="ph"' : ''}></button>
       <h3>${p.name}</h3><div class="unit">${p.unit}</div>
       ${opts.loc ? `<div class="loc">${loc(p)}</div>` : ''}
       <div class="price">${money(p.price)}</div>
@@ -156,7 +162,8 @@ const ARTIMG = k => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns=
         catHit.map(c => aisleCard(c)).join('');
     }
     const cat = CATS.find(c => c.id === f.cat);
-    const items = Object.values(P).filter(p => p.cat === cat.id && (f.sub === 'All' || p.subs.includes(f.sub)));
+    const row = (ROWS[cat.id] || []).find(r => r[0] === f.sub);
+    const items = Object.values(P).filter(p => p.cat === cat.id && (f.sub === 'All' || (row ? row[1].includes(p.id) : p.subs.includes(f.sub))));
     if (!cat.subs) return aisleCard(cat);
     if (!items.length) return `<div class="empty"><div><h3>${f.sub} are restocking today.</h3><p>Fresh ${f.sub.toLowerCase()} are on their way to Aisle ${cat.aisle}. A ULTIM8 Helper can tell you when they arrive.</p></div></div>`;
     return `<div class="grid ${cols === 6 ? 'grid--6' : ''}">${items.map(p => productCard(p, { loc: cols !== 6 })).join('')}</div>`;
@@ -183,6 +190,7 @@ function krow(title, sub, inner) {
   return `<section class="krow"><div class="krow__h"><h2>${title}</h2>${sub ? `<span>${sub}</span>` : ''}</div><div class="krow__scroll">${inner}</div></section>`;
 }
 const catProducts = id => Object.values(P).filter(p => p.cat === id);
+const catBlock = id => { const c = CATS.find(c => c.id === id); return `<section class="kcat"><div class="kcat__h"><h2>${c.name}</h2><span>Aisle ${c.aisle}</span></div>${ROWS[id].map(([t, ids]) => `<div class="krow krow--sub"><div class="krow__h"><h3>${t}</h3></div><div class="krow__scroll">${ids.map(i => productCard(P[i], { loc: true })).join('')}</div></div>`).join('')}</section>`; };
 const productRow = (id, title) => { const c = CATS.find(c => c.id === id); return krow(title || c.name, `Aisle ${c.aisle}`, catProducts(id).map(p => productCard(p, { loc: true })).join('')); };
 const recipeCard = r => `<article class="rc"><img src="${r.img}" alt=""><div><h3>${r.name}</h3><span class="meta">${r.mins} mins • ${r.items.length} items</span><button class="kb" data-recipe="${r.id}">View Ingredients</button></div></article>`;
 const recipeRow = (title, tag, skip) => krow(title, '', RECIPES.filter(r => (!tag || r.tags.includes(tag)) && r.id !== skip).map(recipeCard).join(''));
@@ -206,9 +214,9 @@ const compareRow = (id, title) => krow(title, 'Tap Compare to see them side by s
       <div class="cards">
         <button class="card card--1" data-go="find"><i data-u8="i10"></i><h2>Find a Product</h2><p>Search for your favorite items</p><span class="circle-go"></span><img src="${IMG('hero-apple')}" alt=""></button>
         <button class="card card--2" data-go="recipes"><i data-u8="i14"></i><h2>Shop by Recipe</h2><p>Get ingredients for your favorite meals</p><span class="circle-go"></span><img src="${IMG('hero-pasta')}" alt=""></button>
-        <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>See options and find what’s right for you</p><span class="circle-go"></span><img src="${IMG('hero-milk')}" alt=""></button>
+        <button class="card card--3" data-go="compare"><i data-u8="i13"></i><h2>Compare &amp; Choose</h2><p>Compare products to pick the right option for you</p><span class="circle-go"></span><img src="${IMG('hero-milk')}" alt=""></button>
       </div>
-      ${productRow('produce', 'Fresh Produce')}${productRow('dairy', 'Dairy & Eggs')}${productRow('pantry', 'Pantry Staples')}${productRow('decor', 'Home Decor')}${productRow('kids', 'Kids Products')}</div>`,
+      ${['produce', 'dairy', 'pantry', 'decor', 'kids'].map(catBlock).join('')}</div>`,
 
     find: () => `<div class="page">${pageHead('Find a Product', 'Search for your favorite items.', searchBox('findSearch', 'Search products, brands, or categories...', S.find.q))}${browse('find', 4)}
       ${S.find.q ? '' : ['produce', 'dairy', 'pantry'].filter(id => id !== S.find.cat).map(id => productRow(id, 'Also in ' + CATS.find(c => c.id === id).name)).join('') + aisleRow('More Aisles', ['meat', 'snacks', 'frozen', 'household', 'personal'])}</div>`,

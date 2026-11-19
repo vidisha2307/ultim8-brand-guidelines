@@ -421,3 +421,16 @@ body.embed .stand { display: none; }
 /* No widows */
 h1, h2, h3 { text-wrap: balance; }
 p, small, .meta, .note-line { text-wrap: pretty; }
+
+/* Home: every category shows three rows of products */
+.kcat { margin-top: 52px; }
+.kcat__h { display: flex; align-items: baseline; gap: 20px; }
+.kcat__h h2 { margin: 0; font-weight: 400; font-size: calc(44px * var(--k)); }
+.kcat__h span { font-size: calc(20px * var(--k)); color: var(--orange); font-weight: 600; }
+.krow--sub { margin-top: 20px; }
+.krow--sub .krow__h { margin-bottom: 12px; }
+.krow--sub .krow__h h3 { margin: 0; font-weight: 600; font-size: calc(26px * var(--k)); color: var(--soft); }
+/* photographed products sit like the existing white-background product shots */
+.pc__img img.ph { width: 128px; height: 128px; object-fit: cover; border-radius: 12px; mix-blend-mode: multiply; }
+/* Compare & Choose card: more room between the text and the arrow */
+.card--3 p { margin-bottom: 18px; }
