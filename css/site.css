@@ -1134,3 +1134,10 @@ body[data-page="03"] .spread p, body[data-page="03"] .spread li, body[data-page=
 
 /* Brand Look slider sits closer to the header */
 #brand-look .look__sticky { justify-content: flex-start; padding-top: calc(var(--nav) + 32px); }
+
+/* Brand Look: sits right under the header, shows each full image (no zoom), page scrolls normally outside the box */
+#brand-look { height: auto; }
+#brand-look .look__sticky { position: static; height: auto; justify-content: flex-start; padding: 24px var(--m) 56px; }
+#brand-look .look__frame { flex: none; width: min(1100px, 100%); height: min(68vh, 620px); max-height: none; background: var(--white); border: 1px solid var(--grey); box-sizing: border-box; cursor: ns-resize; }
+#brand-look .look__img { object-fit: contain; transform: none; }
+#brand-look .look__img.is-on { transform: none; }

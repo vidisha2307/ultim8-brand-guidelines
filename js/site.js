@@ -503,17 +503,26 @@
     $('#beautyList').addEventListener('mouseleave', () => hot.classList.remove('is-on'));
   });
 
-  /* ================= BRAND LOOK: image + caption change as you scroll ================= */
+  /* ================= BRAND LOOK: scrolling over the box changes the image + caption; outside it, the page scrolls ================= */
   when('#brand-look', () => {
-    const sec = $('#brand-look'), imgs = $$('.look__img', sec), caps = $$('.look__cap', sec), dots = $$('.look__dots i', sec), n = imgs.length;
-    let cur = -1;
-    const upd = () => {
-      const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
-      const p = Math.min(Math.max(-r.top / (span || 1), 0), 0.9999);
-      const i = Math.floor(p * n); if (i === cur) return; cur = i;
-      [imgs, caps, dots].forEach(list => list.forEach((el, k) => el.classList.toggle('is-on', k === i)));
-    };
-    addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    const sec = $('#brand-look'), frame = $('.look__frame', sec), imgs = $$('.look__img', sec), caps = $$('.look__cap', sec), dots = $$('.look__dots i', sec), n = imgs.length;
+    let cur = 0, acc = 0, lock = 0;
+    const show = i => { cur = Math.max(0, Math.min(n - 1, i)); [imgs, caps, dots].forEach(list => list.forEach((el, k) => el.classList.toggle('is-on', k === cur))); };
+    frame.addEventListener('wheel', e => {
+      const d = e.deltaY;
+      /* past the first / last image, let the page scroll on */
+      if ((d > 0 && cur === n - 1) || (d < 0 && cur === 0)) { acc = 0; return; }
+      e.preventDefault();
+      if (Date.now() < lock) return;
+      acc += d;
+      if (Math.abs(acc) > 40) { show(cur + (acc > 0 ? 1 : -1)); acc = 0; lock = Date.now() + 450; }
+    }, { passive: false });
+    /* swipe on touch screens */
+    let sx = null;
+    frame.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    frame.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+    dots.forEach((d, k) => { d.style.cursor = 'pointer'; d.addEventListener('click', () => show(k)); });
+    show(0);
   });
 
   /* ================= AISLE 04 ================= */
