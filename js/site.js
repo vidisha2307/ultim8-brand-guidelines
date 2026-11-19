@@ -392,11 +392,10 @@
       const t = esc(txt.value || 'Less to Decide. More to Enjoy.'), px = +size.value;
       $('#ttSizeOut').textContent = px + ' px';
       prev.style.fontWeight = w; prev.style.fontSize = px + 'px'; prev.innerHTML = t;
-      all.innerHTML = Object.entries(W).map(([k, n]) => `<div class="tt__row ${+k === w ? 'is-on' : ''}"><div class="tt__sample" style="font-weight:${k}">${t}</div><div class="tt__meta"><span>Pacaembu ${n} · ${k}</span><button class="copy-btn" data-copy-font="Pacaembu ${n}, ${px} px">Copy</button></div></div>`).join('');
+      all.innerHTML = Object.entries(W).map(([k, n]) => `<div class="tt__row ${+k === w ? 'is-on' : ''}"><div class="tt__sample" style="font-weight:${k}">${t}</div><div class="tt__meta"><span>Pacaembu ${n} · ${k}</span></div></div>`).join('');
     }
     $$('#ttWeights .chip').forEach(b => b.addEventListener('click', () => { w = +b.dataset.w; $$('#ttWeights .chip').forEach(x => x.classList.toggle('is-on', x === b)); draw(); }));
     txt.addEventListener('input', draw); size.addEventListener('input', draw);
-    all.addEventListener('click', e => { const b = e.target.closest('[data-copy-font]'); if (!b) return; navigator.clipboard?.writeText(b.dataset.copyFont).catch(() => {}); toast(`Copied “${b.dataset.copyFont}”`); });
     draw();
   });
 
@@ -448,7 +447,7 @@
     grid.innerHTML = ICONS.map(([k, n], i) => `<button data-i="${i}" aria-label="${n}">${u8(k)}</button>`).join('');
     function showIcon(i) {
       const [k, n, d] = ICONS[i];
-      det.innerHTML = `<div class="icon-detail__big">${u8(k)}</div><div><h4>${n}</h4><p>${d}</p><div class="icon-sizes">${[48, 32, 24, 16].map(s => `<span style="height:${s}px;display:block">${u8(k)}</span>`).join('')}</div></div>`;
+      if (det) det.innerHTML = `<div class="icon-detail__big">${u8(k)}</div><div><h4>${n}</h4><p>${d}</p><div class="icon-sizes">${[48, 32, 24, 16].map(s => `<span style="height:${s}px;display:block">${u8(k)}</span>`).join('')}</div></div>`;
       $$('button', grid).forEach((b, j) => b.classList.toggle('is-on', j === i));
     }
     grid.addEventListener('click', e => { const b = e.target.closest('button'); if (b) showIcon(+b.dataset.i); });

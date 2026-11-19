@@ -1039,3 +1039,35 @@ body[data-page="02"] .spread p, body[data-page="02"] .spread li { text-align: le
 @media (max-width: 860px) {
   #typography .tt, #pattern-mix .pm, #typography .type-intro, #pattern-mix .pm-copy { grid-column: 1 / -1; grid-row: auto; margin-top: 24px; }
 }
+
+/* Typeface: Font Usage sits inside the tester */
+#typeTester .type-row div { color: var(--orange); }
+#typeTester .label + .type-row { margin-top: 4px; }
+
+/* Icons: plain orange, Pacaembu build top right, icons in a neat grid of white tiles below */
+#icons-bites { background: var(--orange); }
+#icons-bites .title, #icons-bites .copy { color: var(--ink); grid-column: 1 / span 5; }
+#icons-bites .title { grid-row: 1; }
+#icons-bites .copy { grid-row: 2 / span 2; text-align: left; }
+#icons-bites .icon-construct { grid-column: 7 / -1; grid-row: 1 / span 2; justify-self: end; align-self: start; width: min(100%, 360px); background: var(--white); border-radius: 16px; padding: 18px; box-sizing: border-box; }
+#icons-bites .icon-construct img { width: 100%; height: auto; display: block; }
+#icons-bites .fig-tag { color: var(--ink); text-align: left; margin: 10px 0 0; }
+#icons-bites .icon-grid { grid-column: 7 / -1; grid-row: 3; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; align-self: start; }
+#icons-bites .icon-grid button { background: var(--white); color: var(--orange); border-radius: 16px; }
+#icons-bites .icon-grid button:hover, #icons-bites .icon-grid button.is-on { background: var(--white); color: var(--deep); transform: translateY(-4px); box-shadow: 0 8px 18px rgba(17,17,17,.15); }
+@media (max-width: 860px) {
+  #icons-bites { background: var(--orange); }
+  #icons-bites .title, #icons-bites .copy, #icons-bites .icon-construct, #icons-bites .icon-grid { grid-column: 1 / -1; grid-row: auto; justify-self: start; }
+}
+
+/* Layouts: text column and tool container share the same height */
+#layout-recipe .title { grid-row: 1; }
+#layout-recipe .copy { grid-row: 2; align-self: stretch; }
+#layout-recipe .grid-tool { grid-row: 2; align-self: stretch; display: flex; flex-direction: column; }
+#layout-recipe .grid-tool > .panel { flex: 1; }
+@media (max-width: 860px) { #layout-recipe .copy, #layout-recipe .grid-tool { grid-row: auto; } }
+#icons-bites .title { grid-row: 1 !important; }
+#icons-bites .copy { grid-row: 2 / span 2 !important; align-self: start; }
+#icons-bites .icon-construct { grid-row: 1 / span 2 !important; }
+#icons-bites .icon-grid { grid-row: 3 !important; }
+@media (max-width: 860px) { #icons-bites .copy, #icons-bites .icon-construct, #icons-bites .icon-grid { grid-row: auto !important; } }
